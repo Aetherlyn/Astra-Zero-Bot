@@ -1,7 +1,7 @@
 import os 
-import discord 
+import discord
 from discord.ext import commands 
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -19,6 +19,20 @@ async def on_ready():
 async def ping(ctx: commands.Context): 
     await ctx.send("Pong!")
 
+@bot.command()
+async def about(ctx):
+    embed = discord.Embed(
+        title="Astra Zero Bot",
+        description="Experiment Bot",
+        color=discord.Color.blurple()
+    )
+
+    embed.add_field(name="Version", value="v0.1.0", inline=False)
+    embed.add_field(name="Author", value="Aetherlyn", inline=False)
+
+    embed.set_footer(text="Built with Pycord")
+    
+    await ctx.send(embed=embed)
 
 bot.run(os.getenv('TOKEN')) 
     
