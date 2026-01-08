@@ -1,7 +1,21 @@
 import os 
 import discord
+import logging
 from discord.ext import commands 
 from dotenv import load_dotenv
+
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] [%(levelname)s] %(name)s: %(message)s",
+    datefmt="%H:%M:%S",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("astra.log", mode="w", encoding="utf-8")
+    ]   
+)
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 

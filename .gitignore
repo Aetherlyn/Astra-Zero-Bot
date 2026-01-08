@@ -15,3 +15,6 @@ wheels/
 
 # Editor noise
 .vscode/
+
+# Log files
+astra.log
