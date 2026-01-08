@@ -6,7 +6,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-#Logging Section Start
+# === Logging ===
+
 logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s] [%(levelname)s] %(name)s: %(message)s",
@@ -20,17 +21,23 @@ logging.basicConfig(
 logging.getLogger("discord.gateway").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
-#Logging Section End
+
+# === Bot setup ===
+
+description = """ A small experimental Discord bot project to learn bot architecture, commands, and logging. """
 
 intents = discord.Intents.default() 
 intents.message_content = True 
 intents.members = True 
 
-bot = commands.Bot( command_prefix = "!", intents =intents ) 
+bot = commands.Bot( command_prefix = "!", description = description, intents = intents ) 
 
 @bot.event 
 async def on_ready(): 
     logger.info(f"Logged in as {bot.user} (ID: {bot.user.id})")
+
+
+# === Commands ===
 
 @bot.command() 
 async def ping(ctx: commands.Context): 
@@ -51,5 +58,6 @@ async def about(ctx):
     
     await ctx.send(embed=embed)
 
+
+
 bot.run(os.getenv('TOKEN')) 
-    
