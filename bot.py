@@ -4,7 +4,9 @@ import logging
 from discord.ext import commands 
 from dotenv import load_dotenv
 
+load_dotenv()
 
+#Logging Section Start
 logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s] [%(levelname)s] %(name)s: %(message)s",
@@ -15,9 +17,10 @@ logging.basicConfig(
     ]   
 )
 
-logger = logging.getLogger(__name__)
+logging.getLogger("discord.gateway").setLevel(logging.WARNING)
 
-load_dotenv()
+logger = logging.getLogger(__name__)
+#Logging Section End
 
 intents = discord.Intents.default() 
 intents.message_content = True 
@@ -27,7 +30,7 @@ bot = commands.Bot( command_prefix = "!", intents =intents )
 
 @bot.event 
 async def on_ready(): 
-    print(f"Logged in as {bot.user} (ID: {bot.user.id})")
+    logger.info(f"Logged in as {bot.user} (ID: {bot.user.id})")
 
 @bot.command() 
 async def ping(ctx: commands.Context): 
