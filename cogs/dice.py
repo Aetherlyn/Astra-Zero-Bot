@@ -26,12 +26,15 @@ class Dice(commands.Cog):
                 rolls = []
                 formatted_rolls = []
 
-                for i in range(count):
+                roll_count = abs(count)
+                sign = -1 if count < 0 else 1
+
+                for i in range(roll_count):
                     roll = random.randint(1, sides)
                     rolls.append(roll)
                     formatted_rolls.append(self.format_roll(roll, sides))
 
-                subtotal = sum(rolls)
+                subtotal = sum(rolls) * sign
                 total += subtotal
 
                 breakdown.append(f"{part}: ({', '.join(formatted_rolls)}) {subtotal}")
