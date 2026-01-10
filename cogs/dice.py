@@ -24,14 +24,17 @@ class Dice(commands.Cog):
                 sides = int(sides_str)
 
                 rolls = []
+                formatted_rolls = []
+
                 for i in range(count):
                     roll = random.randint(1, sides)
                     rolls.append(roll)
+                    formatted_rolls.append(self.format_roll(roll, sides))
 
                 subtotal = sum(rolls)
                 total += subtotal
 
-                breakdown.append(f"{part} -> {rolls} = {subtotal}")
+                breakdown.append(f"{part}: ({', '.join(formatted_rolls)}) {subtotal}")
             
             else:
                 value = int(part)
@@ -50,7 +53,7 @@ class Dice(commands.Cog):
     async def roll(self, ctx: commands.Context, *, expr: str):
         total, breakdown = self.roll_expression(expr)
 
-        msg = "**Roll Result**\n"
+        msg = "**Rolls:** "
         msg += "\n".join(breakdown)
         msg += f"\n\n**Total: {total}**"
 
