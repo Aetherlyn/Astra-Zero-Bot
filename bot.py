@@ -72,6 +72,7 @@ async def about(ctx):
     
     await ctx.send(embed=embed)
 
-
+# === Cogs ===
+bot.load_extension("cogs.dice")
 
 bot.run(os.getenv('TOKEN')) 
