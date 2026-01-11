@@ -58,6 +58,8 @@ class Dice(commands.Cog):
     
     @commands.command(name="roll", aliases=["r"])
     async def roll(self, ctx: commands.Context, *, expr: str):
+        await ctx.message.delete()
+        
         total, breakdown = self.roll_expression(expr)
 
         msg = "**Rolls:** " + " ".join(breakdown)
