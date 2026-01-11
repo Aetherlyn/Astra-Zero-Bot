@@ -18,31 +18,35 @@ class Dice(commands.Cog):
             if part == "":
                 continue
 
-            if "d" in part:
-                count_str, sides_str = part.split("d")
+            sign = -1 if part.startswith("-") else 1
+            sign_symbol = "-" if sign == -1 else "+"
+            clean_part = part.lstrip("-")
+
+            if "d" in clean_part:
+                count_str, sides_str = clean_part.split("d")
                 count = int(count_str)
                 sides = int(sides_str)
 
                 rolls = []
-                formatted_rolls = []
 
-                roll_count = abs(count)
-                sign = -1 if count < 0 else 1
-
-                for i in range(roll_count):
+                for i in range(abs(count)):
                     roll = random.randint(1, sides)
                     rolls.append(roll)
-                    formatted_rolls.append(self.format_roll(roll, sides))
 
                 subtotal = sum(rolls) * sign
                 total += subtotal
 
-                breakdown.append(f"{part}: ({', '.join(formatted_rolls)}) {subtotal}")
+                rolls_str = ", ".join(self.format_roll(r, sides) for r in rolls)
+
+                breakdown.append(f"{sign_symbol} {abs(count)}d{sides} ({rolls_str})")
             
             else:
-                value = int(part)
-                total += value
-                breakdown.append(str(value))
+                value = int(clean_part)
+                total += value * sign
+                breakdown.append(f"{sign_symbol} {value}")
+
+            if breakdown and breakdown[0].startswith("+"):
+                breakdown[0] = breakdown[0][2:]
         
         return total, breakdown
 
@@ -56,9 +60,8 @@ class Dice(commands.Cog):
     async def roll(self, ctx: commands.Context, *, expr: str):
         total, breakdown = self.roll_expression(expr)
 
-        msg = "**Rolls:** "
-        msg += "\n".join(breakdown)
-        msg += f"\n\n**Total: {total}**"
+        msg = "**Rolls:** " + " ".join(breakdown)
+        msg += f"\n**Total:** {total}"
 
         await ctx.send(msg)
 
