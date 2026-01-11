@@ -62,7 +62,7 @@ class Dice(commands.Cog):
         
         total, breakdown = self.roll_expression(expr)
 
-        msg = "**Rolls:** " + " ".join(breakdown)
+        msg = f"{ctx.author.mention} **Rolls:** " + " ".join(breakdown)
         msg += f"\n**Total:** {total}"
 
         await ctx.send(msg)
