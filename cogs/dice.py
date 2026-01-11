@@ -24,7 +24,7 @@ class Dice(commands.Cog):
 
             if "d" in clean_part:
                 count_str, sides_str = clean_part.split("d")
-                count = int(count_str)
+                count = int(count_str) if count_str else 1
                 sides = int(sides_str)
 
                 rolls = []
