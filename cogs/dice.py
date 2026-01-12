@@ -1,6 +1,8 @@
 import random
+import logging
 from discord.ext import commands
 
+logger = logging.getLogger(__name__)
 class Dice(commands.Cog):
     def __init__(self,  bot):
         self.bot = bot
@@ -57,11 +59,18 @@ class Dice(commands.Cog):
             return str(value)
     
     @commands.command(name="roll", aliases=["r"])
-    async def roll(self, ctx: commands.Context, *, expr: str):
+    async def roll(self, ctx: commands.Context, *, expression: str):
         await ctx.message.delete()
         
-        total, breakdown = self.roll_expression(expr)
+        try:
+            total, breakdown = self.roll_expression(expression)
+        except ValueError:
+            logger.warning("Invalid roll expression from %s (%s): %s", ctx.author, ctx.author.id, expression)
 
+            await ctx.send(
+             f"{ctx.author.mention} Invalid roll format. Use **XdY** format (d20, 1d6, 2d8, 3d10)")
+            return
+        
         msg = f"{ctx.author.mention} **Rolls:** " + " ".join(breakdown)
         msg += f"\n**Total:** {total}"
 
