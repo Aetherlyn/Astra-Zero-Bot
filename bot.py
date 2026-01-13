@@ -1,5 +1,4 @@
 import os
-import time
 import discord
 import logging
 from discord.ext import commands 
@@ -37,42 +36,8 @@ bot = commands.Bot( command_prefix = "!", description = description, intents = i
 async def on_ready(): 
     logger.info(f"Logged in as {bot.user} (ID: {bot.user.id})")
 
-
-# === Commands ===
-
-@bot.command() 
-async def ping(ctx: commands.Context):
-    start = time.perf_counter() 
-    msg = await ctx.send("Pinging...")
-    end = time.perf_counter()
-
-    gateway_latency_ms = round(bot.latency * 1000)
-    round_trip_latency_ms = round((end - start) * 1000)
-    
-    await msg.edit(
-        content =(
-            f"Pong!\n"
-            f"Gateway Latency: {gateway_latency_ms} ms\n"
-            f"Round Trip Latency {round_trip_latency_ms} ms\n"
-        )
-    )
-
-@bot.command()
-async def about(ctx):
-    embed = discord.Embed(
-        title="Astra Zero Bot",
-        description="Experiment Bot",
-        color=discord.Color.blurple()
-    )
-
-    embed.add_field(name="Version", value="v0.1.0", inline=False)
-    embed.add_field(name="Author", value="Aetherlyn", inline=False)
-
-    embed.set_footer(text="Built with Pycord")
-    
-    await ctx.send(embed=embed)
-
 # === Cogs ===
+bot.load_extension("cogs.meta")
 bot.load_extension("cogs.dice")
 
 bot.run(os.getenv('TOKEN')) 
