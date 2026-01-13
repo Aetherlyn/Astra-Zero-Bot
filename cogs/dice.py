@@ -71,7 +71,8 @@ class Dice(commands.Cog):
              f"{ctx.author.mention} Invalid roll format. Use **XdY** format (d20, 1d6, 2d8, 3d10)")
             return
         
-        msg = f"{ctx.author.mention} **Rolls:** " + " ".join(breakdown)
+        msg = f"{ctx.author.mention}" 
+        msg += f"\n**Rolls:** " + " ".join(breakdown)
         msg += f"\n**Total:** {total}"
 
         await ctx.send(msg)
