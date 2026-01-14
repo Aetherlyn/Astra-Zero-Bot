@@ -39,7 +39,16 @@ class Meta(commands.Cog):
 
         embed.set_footer(text="Built with Pycord")
         
-        await ctx.send(embed=embed)  
+        await ctx.send(embed = embed)
+
+    @commands.command()
+    async def help(self, ctx):
+        embed = discord.Embed(
+            description="You got helped",
+            color=discord.Color.blurple()
+        )
+
+        await ctx.send(embed = embed)
 
 
 
