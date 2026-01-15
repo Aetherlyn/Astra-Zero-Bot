@@ -44,10 +44,25 @@ class Meta(commands.Cog):
     @commands.command()
     async def help(self, ctx):
         embed = discord.Embed(
-            description="You got helped",
+            description="Dice rolling & utility commands",
             color=discord.Color.blurple()
         )
 
+        embed.add_field(
+            name="Dice",
+            value=(
+                "**!roll** [!r]: Rolls a random dice in the XdY format."
+            ),
+            inline=False
+        )
+
+        embed.add_field(
+            name="Core",
+            value=("**!about**: Information about the bot.\n"
+                   "**!ping**: Checks the ping time.\n"
+                   ),
+            inline=False
+        )
         await ctx.send(embed = embed)
 
 
