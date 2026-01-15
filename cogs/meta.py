@@ -34,7 +34,7 @@ class Meta(commands.Cog):
             color=discord.Color.blurple()
         )
 
-        embed.add_field(name="Version", value="v0.1.0", inline=False)
+        embed.add_field(name="Version", value="v0.2.0", inline=False)
         embed.add_field(name="Author", value="Aetherlyn", inline=False)
 
         embed.set_footer(text="Built with Pycord")
