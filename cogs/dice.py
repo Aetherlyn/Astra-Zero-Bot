@@ -76,6 +76,14 @@ class Dice(commands.Cog):
         msg += f"\n**Total:** {total}"
 
         await ctx.send(msg)
+    
+    @roll.error
+    async def roll_error(self, ctx: commands.Context, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            logger.warning("Roll command called without any arguments by %s (%s)", ctx.author, ctx.author.id)
+            await ctx.message.delete()
+            await ctx.send(f"Missing arguments. Example: `!roll d20` or `!roll 2d6+3`")
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Dice(bot))
