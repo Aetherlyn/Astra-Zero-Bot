@@ -51,15 +51,15 @@ class Meta(commands.Cog):
         embed.add_field(
             name="Dice",
             value=(
-                "**!roll** [!r]: Rolls a random dice in the XdY format."
+                "**![roll|r]** : Rolls a random dice in the XdY format."
             ),
             inline=False
         )
 
         embed.add_field(
             name="Core",
-            value=("**!about**: Information about the bot.\n"
-                   "**!ping**: Checks the ping time.\n"
+            value=("**![about]**: Information about the bot.\n"
+                   "**![ping]**: Checks the ping time.\n"
                    ),
             inline=False
         )
