@@ -12,4 +12,4 @@ def load_data():
     
 def save_data(data):
     with DATA_FILE.open("w", encoding="utf-8") as file:
-        json.data(data, file, indent=2)
+        json.dump(data, file, indent=2)
