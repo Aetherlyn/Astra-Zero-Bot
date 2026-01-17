@@ -1,11 +1,13 @@
 import random
 import logging
 from discord.ext import commands
+from data import load_data, save_data
 
 logger = logging.getLogger(__name__)
 class Dice(commands.Cog):
     def __init__(self,  bot):
         self.bot = bot
+        self.data = load_data()
 
     def roll_expression(self, expression: str):
         expression = expression.replace(" ", "")
@@ -74,6 +76,11 @@ class Dice(commands.Cog):
         msg = f"{ctx.author.mention}" 
         msg += f"\n**Rolls:** " + " ".join(breakdown)
         msg += f"\n**Total:** {total}"
+
+        user_id = str(ctx.author.id)
+
+        self.data[user_id] = self.data.get(user_id, 0) + 1
+        save_data(self.data)
 
         await ctx.send(msg)
     
