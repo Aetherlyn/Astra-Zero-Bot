@@ -14,7 +14,7 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler("astra.log", mode="w", encoding="utf-8")
+        logging.FileHandler("data/astra.log", mode="w", encoding="utf-8")
     ]   
 )
 
