@@ -77,11 +77,6 @@ class Dice(commands.Cog):
         msg += f"\n**Rolls:** " + " ".join(breakdown)
         msg += f"\n**Total:** {total}"
 
-        user_id = str(ctx.author.id)
-
-        self.data[user_id] = self.data.get(user_id, 0) + 1
-        save_data(self.data)
-
         await ctx.send(msg)
     
     @roll.error
