@@ -1,13 +1,11 @@
 import random
 import logging
 from discord.ext import commands
-from data import load_data, save_data
 
 logger = logging.getLogger(__name__)
 class Dice(commands.Cog):
     def __init__(self,  bot):
         self.bot = bot
-        self.data = load_data()
 
     def roll_expression(self, expression: str):
         expression = expression.replace(" ", "")
