@@ -36,6 +36,8 @@ def init_db():
                 
                 proficiency_bonus INTEGER DEFAULT 2,
                 initiative INTEGER DEFAULT 0,
+                inspiration INTEGER NOT NULL DEFAULT 0,
+
                      
                 tools TEXT DEFAULT '',
                 languages TEXT DEFAULT '',
@@ -61,7 +63,7 @@ def get_or_create_character(guild_id: int, user_id: int):
     
 def update_character_field(guild_id, user_id, field, value):
     allowed_fields = {
-        "name","race","class_and_level","hp","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency_bonus","initiative","tools","languages"
+        "name","race","class_and_level","hp","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency_bonus","initiative","tools","languages","inspiration"
     }
 
     if field not in allowed_fields:
