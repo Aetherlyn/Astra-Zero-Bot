@@ -11,6 +11,8 @@ def get_conn():
     conn.execute("PRAGMA foreign_keys = ON;")
     return conn
 
+# === Data Base ===
+
 def init_db():
     with get_conn() as conn:
         conn.execute("""
@@ -45,6 +47,8 @@ def init_db():
                 UNIQUE (guild_id, user_id)
             )
         """)
+
+# === Commmands ===
 
 def get_or_create_character(guild_id: int, user_id: int):
     with get_conn() as conn:
