@@ -59,11 +59,11 @@ def get_or_create_character(guild_id: int, user_id: int):
 
         if row:
             return row
+        else:
+            cur.execute("INSERT INTO characters (guild_id, user_id) VALUES (?, ?)", (guild_id, user_id))
+            conn.commit()
 
-        cur.execute("INSERT INTO characters (guild_id, user_id) VALUES (?, ?)", (guild_id, user_id))
-        conn.commit()
-
-        return cur.execute("SELECT * FROM characters WHERE guild_id=? AND user_id=?", (guild_id, user_id)).fetchone()
+            return cur.execute("SELECT * FROM characters WHERE guild_id=? AND user_id=?", (guild_id, user_id)).fetchone()
     
 def update_character_field(guild_id, user_id, field, value):
     allowed_fields = {
