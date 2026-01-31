@@ -41,12 +41,11 @@ class Character(commands.Cog):
         # === Ability Scores ===
 
         embed.add_field(name="STR", value=f"{char['strength']}", inline=True)
-        embed.add_field(name="INT", value=f"{char['intelligence']}", inline=True)
-
-        embed.add_field(name="DEX", value=f"{char['dexterity']}", inline=True)
-        embed.add_field(name="WIS", value=f"{char['wisdom']}", inline=True)
-
         embed.add_field(name="CON", value=f"{char['constitution']}", inline=True)
+        embed.add_field(name="DEX", value=f"{char['dexterity']}", inline=True)
+
+        embed.add_field(name="INT", value=f"{char['intelligence']}", inline=True)
+        embed.add_field(name="WIS", value=f"{char['wisdom']}", inline=True)
         embed.add_field(name="CHR", value=f"{char['charisma']}", inline=True)
 
         embed.add_field(name=SPACER, value=SPACER, inline=False)
