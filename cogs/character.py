@@ -16,16 +16,14 @@ class Character(commands.Cog):
         SPACER = "\u200b"
 
         embed = discord.Embed(
-            title = "Character Sheet",
+            title = f"{char['name']}",
             color = discord.Color.dark_gold()
         )
 
 
         # === Title Section ===
         embed.description = (
-            f"**Name:** {char['name']}\n"
-            f"**Race:** {char['race']}\n"
-            f"**Class&Level:** {char['class_and_level']}\n"
+            f"**Race:** {char['race']}     **Class&Level:** {char['class_and_level']}"
         )
 
         embed.add_field(name=SPACER, value=SPACER, inline=False)
@@ -64,7 +62,7 @@ class Character(commands.Cog):
 
         embed.add_field(
             name="Weapon Proficiencies",
-            value = f"**Weapons:** {char['weapons']}",
+            value = f"{char['weapons']}",
             inline=False
         )
 
@@ -74,7 +72,7 @@ class Character(commands.Cog):
 
         embed.add_field(
             name="Armor Proficiencies",
-            value = f"**Armor:** {char['armor']}",
+            value = f"{char['armor']}",
             inline=False
         )
 
@@ -84,7 +82,7 @@ class Character(commands.Cog):
 
         embed.add_field(
             name="Tool Proficiencies",
-            value = f"**Tools:** {char['tools']}",
+            value = f"{char['tools']}",
             inline=False
         )
 
@@ -94,7 +92,7 @@ class Character(commands.Cog):
 
         embed.add_field(
             name="Languages",
-            value = f"**Languages:** {char['languages']}",
+            value = f"{char['languages']}",
             inline=False
         )
 
