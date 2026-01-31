@@ -1,6 +1,7 @@
 import os
 import discord
 import logging
+from modules.database import init_db
 from discord.ext import commands 
 from dotenv import load_dotenv
 
@@ -39,5 +40,7 @@ async def on_ready():
 # === Cogs ===
 bot.load_extension("cogs.meta")
 bot.load_extension("cogs.dice")
+bot.load_extension("cogs.character")
 
+init_db()
 bot.run(os.getenv('TOKEN')) 
