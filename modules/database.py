@@ -36,11 +36,12 @@ def init_db():
                 wisdom INTEGER DEFAULT 10,
                 charisma INTEGER DEFAULT 10,
                 
-                proficiency_bonus INTEGER DEFAULT 2,
+                proficiency INTEGER DEFAULT 2,
                 initiative INTEGER DEFAULT 0,
                 inspiration INTEGER NOT NULL DEFAULT 0,
 
-                     
+                weapons TEXT DEFAULT ''
+                armor TEXT DEFAULT '',     
                 tools TEXT DEFAULT '',
                 languages TEXT DEFAULT '',
                      
