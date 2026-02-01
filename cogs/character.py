@@ -9,8 +9,9 @@ class Character(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command()
+    @commands.group(invoke_without_command=True)
     async def char(self, ctx):
+    
         char = get_or_create_character(ctx.guild.id, ctx.author.id)
 
         SPACER = "\u200b"
@@ -99,6 +100,14 @@ class Character(commands.Cog):
         embed.add_field(name=SPACER, value=SPACER, inline=False)
 
         await ctx.send(embed=embed)
+
+    @char.command()
+    async def set(self, ctx):
+        msg = "Future teaches you to be alone"
+        
+        await ctx.send(msg)
+
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
