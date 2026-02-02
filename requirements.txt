@@ -1,0 +1,2 @@
+#With Python 3.13.7
+py-cord==2.7.0
