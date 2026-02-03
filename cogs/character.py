@@ -102,10 +102,39 @@ class Character(commands.Cog):
         await ctx.send(embed=embed)
 
     @char.command()
-    async def set(self, ctx):
-        msg = "Future teaches you to be alone"
+    async def set(self, ctx, field: str, *, value: str):
+        field = field.lower()
+        value = value.strip()
+
+        int_fields = {
+            "hp", "ac", "speed",
+            "strength", "dexterity", "constitution",
+            "intelligence", "wisdom", "charisma",
+            "proficiency", "initiative"
+        }
+
+        text_fields = {
+            "name","race","class_and_level",
+            "weapons", "armor", "tools", "languages"
+        }
+
+        if field not in int_fields and field not in text_fields:
+            await ctx.message.delete()
+            await ctx.send("Invalid Field")
+            return
         
-        await ctx.send(msg)
+        if field in int_fields:
+            value = int(value)
+
+        update_character_field(ctx.guild.id, ctx.author.id, field, value)
+        await ctx.message.delete()
+        await ctx.send(f"Updated **{field}** to **{value}**.")
+        
+    @set.error
+    async def set_error(self, ctx: commands.Context, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Usage: !char set <field> <value>\nExample: !char set hp 24")
+       
 
 
 
