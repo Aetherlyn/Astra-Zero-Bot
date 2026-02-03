@@ -118,6 +118,27 @@ class Character(commands.Cog):
             "weapons", "armor", "tools", "languages"
         }
 
+        if field == "str":
+            field = "strength"
+        elif field == "dex":
+            field = "dexterity"
+        elif field == "con":
+            field = "constitution"
+        elif field == "int":
+            field = "intelligence"
+        elif field == "wis":
+            field = "wisdom"
+        elif field == "chr":
+            field = "charisma"
+        elif field == "prof":
+            field = "proficiency"
+        elif field == "init":
+            field = "initiative"
+        elif field == "class":
+            field = "class_and_level"
+        elif field == "lang":
+            field = "languages"
+          
         if field not in int_fields and field not in text_fields:
             await ctx.message.delete()
             await ctx.send("Invalid Field")
