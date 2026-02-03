@@ -147,7 +147,7 @@ class Character(commands.Cog):
 
         update_character_field(ctx.guild.id, ctx.author.id, field, value)
         await ctx.message.delete()
-        await ctx.send(f"Updated **{field}** to **{value}**.")
+        await ctx.send(f"Updated **{field.capitalize()}** to **{value}**.")
         
     @set.error
     async def set_error(self, ctx: commands.Context, error):
