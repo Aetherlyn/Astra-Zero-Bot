@@ -23,7 +23,7 @@ def init_db():
                 
                 name TEXT DEFAULT 'Unnamed',
                 race TEXT DEFAULT 'Unknown',
-                class_and_level TEXT DEFAULT 'Unknown',
+                class TEXT DEFAULT 'Unknown',
                      
                 hp INTEGER DEFAULT 0,
                 ac INTEGER DEFAULT 0,
@@ -68,7 +68,7 @@ def get_or_create_character(guild_id: int, user_id: int):
     
 def update_character_field(guild_id, user_id, field, value):
     allowed_fields = {
-        "name","race","class_and_level","hp","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration"
+        "name","race","class","hp","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration"
     }
 
     if field not in allowed_fields:

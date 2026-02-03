@@ -24,7 +24,7 @@ class Character(commands.Cog):
 
         # === Title Section ===
         embed.description = (
-            f"**Race:** {char['race']}     **Class&Level:** {char['class_and_level']}"
+            f"**Race:** {char['race']}     **Class & Level:** {char['class']}"
         )
 
         embed.add_field(name=SPACER, value=SPACER, inline=False)
@@ -114,7 +114,7 @@ class Character(commands.Cog):
         }
 
         text_fields = {
-            "name","race","class_and_level",
+            "name","race","class",
             "weapons", "armor", "tools", "languages"
         }
 
@@ -134,8 +134,6 @@ class Character(commands.Cog):
             field = "proficiency"
         elif field == "init":
             field = "initiative"
-        elif field == "class":
-            field = "class_and_level"
         elif field == "lang":
             field = "languages"
           
