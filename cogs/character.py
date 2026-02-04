@@ -118,24 +118,19 @@ class Character(commands.Cog):
             "weapons", "armor", "tools", "languages"
         }
 
-        if field == "str":
-            field = "strength"
-        elif field == "dex":
-            field = "dexterity"
-        elif field == "con":
-            field = "constitution"
-        elif field == "int":
-            field = "intelligence"
-        elif field == "wis":
-            field = "wisdom"
-        elif field == "chr":
-            field = "charisma"
-        elif field == "prof":
-            field = "proficiency"
-        elif field == "init":
-            field = "initiative"
-        elif field == "lang":
-            field = "languages"
+        aliases = {
+            "str": "strength",
+            "dex": "dexterity",
+            "con": "constitution",
+            "int": "intelligence",
+            "wis": "wisdom",
+            "chr": "charisma",
+            "prof": "proficiency",
+            "init": "initiative",
+            "lang": "languages",
+        }
+
+        field = aliases.get(field, field)
           
         if field not in int_fields and field not in text_fields:
             await ctx.message.delete()
@@ -153,8 +148,9 @@ class Character(commands.Cog):
     async def set_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Usage: !char set <field> <value>\nExample: !char set hp 24")
-       
 
+    @commands.group()   
+    async def insp(self, ctx):
 
 
 def setup(bot: commands.Bot):
