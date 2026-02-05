@@ -149,9 +149,20 @@ class Character(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Usage: !char set <field> <value>\nExample: !char set hp 24")
 
-    @commands.group()   
+    @commands.group(invoke_without_command=True)   
     async def insp(self, ctx):
+        char = get_or_create_character(ctx.guild.id, ctx.author.id)
 
+        msg = f"{ctx.author.mention}"
+        msg += f"\n**Inspiration**"
+
+        if char['inspiration'] == 0:
+            msg += "\nYou currently have **no inspiration**"
+        elif char['inspiration'] == 1:
+            msg += "\nYou currently have **1 inspiration point**"
+        
+        await ctx.message.delete()
+        await ctx.send(msg)
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
