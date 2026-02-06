@@ -51,22 +51,22 @@ def init_db():
 
 # === Commmands ===
 
-def get_or_create_character(guild_id: int, user_id: int):
+def create_character(guild_id: int, user_id: int):
     with get_conn() as conn:
         cur = conn.cursor()
+        cur.execute("INSERT INTO characters (guild_id, user_id) VALUES(?, ?)", (guild_id, user_id))
+        conn.commit()
 
-        cur.execute("SELECT * FROM characters WHERE guild_id=? AND user_id=?", (guild_id, user_id))
-        row = cur.fetchone()
-
-        if row:
-            return row
-        else:
-            cur.execute("INSERT INTO characters (guild_id, user_id) VALUES (?, ?)", (guild_id, user_id))
-            conn.commit()
-
-            return cur.execute("SELECT * FROM characters WHERE guild_id=? AND user_id=?", (guild_id, user_id)).fetchone()
+        return cur.execute("SELECT * FROM characters WHERE guild_id=? AND user_id=?",(guild_id, user_id)).fetchone()
     
-def update_character_field(guild_id, user_id, field, value):
+def read_character(guild_id: int, user_id: int):
+    with get_conn() as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM characters WHERE guild_id=? AND user_id=?",(guild_id, user_id))
+
+        return cur.fetchone()
+    
+def write_character(guild_id, user_id, field, value):
     allowed_fields = {
         "name","race","class","hp","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration"
     }
@@ -75,5 +75,6 @@ def update_character_field(guild_id, user_id, field, value):
         raise ValueError("Invalid field")
     
     with get_conn() as conn:
-        conn.execute(f"UPDATE characters SET {field}=? WHERE guild_id=? AND user_id=?",(value, guild_id, user_id))
+        cur = conn.cursor()
+        cur.execute(f"UPDATE characters SET {field}=? WHERE guild_id=? AND user_id=?",(value, guild_id, user_id))
         conn.commit()
