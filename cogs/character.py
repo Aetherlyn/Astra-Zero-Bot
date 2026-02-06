@@ -12,7 +12,10 @@ class Character(commands.Cog):
     @commands.group(invoke_without_command=True)
     async def char(self, ctx):
     
-        char = get_or_create_character(ctx.guild.id, ctx.author.id)
+        char = read_character(ctx.guild.id, ctx.author.id)
+        
+        if not char:
+            char = create_character(ctx.guild.id, ctx.author.id)
 
         SPACER = "\u200b"
 
@@ -40,8 +43,8 @@ class Character(commands.Cog):
         # === Ability Scores ===
 
         embed.add_field(name="STR", value=f"{char['strength']}", inline=True)
-        embed.add_field(name="CON", value=f"{char['constitution']}", inline=True)
         embed.add_field(name="DEX", value=f"{char['dexterity']}", inline=True)
+        embed.add_field(name="CON", value=f"{char['constitution']}", inline=True)
 
         embed.add_field(name="INT", value=f"{char['intelligence']}", inline=True)
         embed.add_field(name="WIS", value=f"{char['wisdom']}", inline=True)
@@ -140,7 +143,7 @@ class Character(commands.Cog):
         if field in int_fields:
             value = int(value)
 
-        update_character_field(ctx.guild.id, ctx.author.id, field, value)
+        write_character(ctx.guild.id, ctx.author.id, field, value)
         await ctx.message.delete()
         await ctx.send(f"Updated **{field.capitalize()}** to **{value}**.")
         
@@ -151,7 +154,7 @@ class Character(commands.Cog):
 
     @commands.group(invoke_without_command=True)   
     async def insp(self, ctx):
-        char = get_or_create_character(ctx.guild.id, ctx.author.id)
+        char = read_character(ctx.guild.id, ctx.author.id)
 
         msg = f"{ctx.author.mention}"
 
@@ -165,24 +168,24 @@ class Character(commands.Cog):
     
     @insp.command()
     async def add(self, ctx):
-        char = get_or_create_character(ctx.guild.id, ctx.author.id)
+        char = read_character(ctx.guild.id, ctx.author.id)
 
         await ctx.message.delete()
 
         if char['inspiration'] == 0:
-            update_character_field(ctx.guild.id, ctx.author.id, 'inspiration', 1)
+            write_character(ctx.guild.id, ctx.author.id, 'inspiration', 1)
             await ctx.send("**Added** an **inspiration** point!")
         elif char['inspiration'] == 1:
             await ctx.send("You **already have** an **inspiration** point!")
 
     @insp.command()
     async def use(self, ctx):
-        char = get_or_create_character(ctx.guild.id, ctx.author.id)
+        char = read_character(ctx.guild.id, ctx.author.id)
 
         await ctx.message.delete()
 
         if char['inspiration'] == 1:
-            update_character_field(ctx.guild.id, ctx.author.id, 'inspiration',0)
+            write_character(ctx.guild.id, ctx.author.id, 'inspiration',0)
             await ctx.send("**Used** an **inspiration** point.")
         elif char['inspiration'] == 0:
             await ctx.send("You **do not have** an **inspiration** point to use.")
