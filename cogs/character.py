@@ -163,6 +163,30 @@ class Character(commands.Cog):
         
         await ctx.message.delete()
         await ctx.send(msg)
+    
+    @insp.command()
+    async def add(self, ctx):
+        char = get_or_create_character(ctx.guild.id, ctx.author.id)
+
+        await ctx.message.delete()
+
+        if char['inspiration'] == 0:
+            update_character_field(ctx.guild.id, ctx.author.id, 'inspiration', 1)
+            await ctx.send("**Added** an **inspiration** point!")
+        elif char['inspiration'] == 1:
+            await ctx.send("You **already have** an **inspiration** point!")
+
+    @insp.command()
+    async def use(self, ctx):
+        char = get_or_create_character(ctx.guild.id, ctx.author.id)
+
+        await ctx.message.delete()
+
+        if char['inspiration'] == 1:
+            update_character_field(ctx.guild.id, ctx.author.id, 'inspiration',0)
+            await ctx.send("**Removed** an **inspiration** point.")
+        elif char['inspiration'] == 0:
+            await ctx.send("You **do not have** an **inspiration** point to remove.")
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
