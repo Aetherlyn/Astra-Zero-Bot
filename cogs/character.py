@@ -154,12 +154,11 @@ class Character(commands.Cog):
         char = get_or_create_character(ctx.guild.id, ctx.author.id)
 
         msg = f"{ctx.author.mention}"
-        msg += f"\n**Inspiration**"
 
         if char['inspiration'] == 0:
-            msg += "\nYou currently have **no inspiration**"
+            msg += "\nYou currently have **no inspiration point**"
         elif char['inspiration'] == 1:
-            msg += "\nYou currently have **1 inspiration point**"
+            msg += "\nYou currently have **one inspiration point**"
         
         await ctx.message.delete()
         await ctx.send(msg)
@@ -184,9 +183,9 @@ class Character(commands.Cog):
 
         if char['inspiration'] == 1:
             update_character_field(ctx.guild.id, ctx.author.id, 'inspiration',0)
-            await ctx.send("**Removed** an **inspiration** point.")
+            await ctx.send("**Used** an **inspiration** point.")
         elif char['inspiration'] == 0:
-            await ctx.send("You **do not have** an **inspiration** point to remove.")
+            await ctx.send("You **do not have** an **inspiration** point to use.")
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
