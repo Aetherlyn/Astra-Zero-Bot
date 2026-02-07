@@ -2,13 +2,42 @@ import logging
 import discord
 from modules.database import *
 from discord.ext import commands
+from discord.ext.commands import CheckFailure
 
 logger = logging.getLogger(__name__)
+
+allowed_commands = {
+    "char",
+    "char help",
+}
 
 class Character(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    
+
+    # === Character Check ===
+
+    async def cog_check(self, ctx):
+        if not ctx.command:
+            return True
+        
+        if ctx.command.qualified_name in allowed_commands:
+            return True
+        
+        char = read_character(ctx.guild.id, ctx.author.id)
+            
+        if not char:
+            await ctx.send("You do not have a character yet. Use '!char' command to create one")
+            return False
+        else:
+            return True
+        
+    async def cog_command_error(self, ctx, error):
+        if isinstance(error, CheckFailure):
+            return
+
+    # === Commands ===
+
     @commands.group(invoke_without_command=True)
     async def char(self, ctx):
     
