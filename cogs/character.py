@@ -218,6 +218,37 @@ class Character(commands.Cog):
             await ctx.send("**Used** an **inspiration** point.")
         elif char['inspiration'] == 0:
             await ctx.send("You **do not have** an **inspiration** point to use.")
+    
+    @insp.command()
+    async def give(self, ctx, member: discord.Member):
+        guild_id = ctx.guild.id
+        giver = ctx.author
+        reciever = member
+
+        giver_char = read_character(guild_id, giver.id)
+        receiver_char = read_character(guild_id, reciever.id)
+
+        if not receiver_char:
+            await ctx.send("Cannot transfer inspiration, reciever has no active character.")
+            return
+        elif receiver_char["inspiration"] == 1:
+            await ctx.send("Target already has inspiration.")
+            return
+        elif giver_char["inspiration"] == 0:
+            await ctx.send("You got no inspiration to give.")
+            return
+        
+        giver_char["inspiration"] = 0
+        receiver_char["inspiration"] = 1
+
+        write_character(guild_id, giver.id, "inspiration", giver_char["inspiration"])
+        write_character(guild_id, reciever.id, "inspiration", receiver_char["inspiration"])
+
+        await ctx.send(f"{giver.mention} transferred **Inspiration** to {reciever.mention}.")
+    
+
+        
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
