@@ -237,12 +237,9 @@ class Character(commands.Cog):
         elif giver_char["inspiration"] == 0:
             await ctx.send("You got no inspiration to give.")
             return
-        
-        giver_char["inspiration"] = 0
-        receiver_char["inspiration"] = 1
 
-        write_character(guild_id, giver.id, "inspiration", giver_char["inspiration"])
-        write_character(guild_id, reciever.id, "inspiration", receiver_char["inspiration"])
+        write_character(guild_id, giver.id, "inspiration", 0)
+        write_character(guild_id, reciever.id, "inspiration", 1)
 
         await ctx.send(f"{giver.mention} transferred **Inspiration** to {reciever.mention}.")
     
