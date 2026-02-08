@@ -11,48 +11,14 @@ allowed_commands = {
     "char help",
 }
 
-class Character(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-
-    # === Character Check ===
-
-    async def cog_check(self, ctx):
-        if not ctx.command:
-            return True
-        
-        if ctx.command.qualified_name in allowed_commands:
-            return True
-        
-        char = read_character(ctx.guild.id, ctx.author.id)
-            
-        if not char:
-            await ctx.send("You do not have a character yet. Use '!char' command to create one")
-            return False
-        else:
-            return True
-        
-    async def cog_command_error(self, ctx, error):
-        if isinstance(error, CheckFailure):
-            return
-
-    # === Commands ===
-
-    @commands.group(invoke_without_command=True)
-    async def char(self, ctx):
-    
-        char = read_character(ctx.guild.id, ctx.author.id)
-        
-        if not char:
-            char = create_character(ctx.guild.id, ctx.author.id)
-
-        SPACER = "\u200b"
-
+# === Character Sheet Template ===
+def character_sheet(guild, char):
         embed = discord.Embed(
             title = f"{char['name']}",
             color = discord.Color.dark_gold()
         )
 
+        SPACER = "\u200b"
 
         # === Title Section ===
         embed.description = (
@@ -130,6 +96,45 @@ class Character(commands.Cog):
         )
 
         embed.add_field(name=SPACER, value=SPACER, inline=False)
+        
+        return embed
+
+class Character(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    # === Character Check ===
+
+    async def cog_check(self, ctx):
+        if not ctx.command:
+            return True
+        
+        if ctx.command.qualified_name in allowed_commands:
+            return True
+        
+        char = read_character(ctx.guild.id, ctx.author.id)
+            
+        if not char:
+            await ctx.send("You do not have a character yet. Use '!char' command to create one")
+            return False
+        else:
+            return True
+        
+    async def cog_command_error(self, ctx, error):
+        if isinstance(error, CheckFailure):
+            return
+
+    # === Commands ===
+
+    @commands.group(invoke_without_command=True)
+    async def char(self, ctx):
+    
+        char = read_character(ctx.guild.id, ctx.author.id)
+        
+        if not char:
+            char = create_character(ctx.guild.id, ctx.author.id)
+
+        embed =  character_sheet(ctx.guild, char)
 
         await ctx.send(embed=embed)
 
@@ -243,8 +248,6 @@ class Character(commands.Cog):
 
         await ctx.send(f"{giver.mention} transferred **Inspiration** to {reciever.mention}.")
     
-
-        
 
 
 def setup(bot: commands.Bot):
