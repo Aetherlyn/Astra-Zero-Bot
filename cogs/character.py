@@ -218,6 +218,8 @@ class Character(commands.Cog):
     async def set_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Usage: !char view <@member>")
+        elif isinstance(error, commands.MemberNotFound):
+            await ctx.send("Could not find a member. Mention them or use their username.")
 
      # === Insp ===
     @commands.group(invoke_without_command=True)   
@@ -282,6 +284,10 @@ class Character(commands.Cog):
 
         await ctx.send(f"{giver.mention} transferred **Inspiration** to {reciever.mention}.")
     
+    @give.error
+    async def set_error(self, ctx: commands.Context, error):
+        if isinstance(error, commands.MemberNotFound):
+            await ctx.send("Could not find a member. Mention them or use their username.")
 
 
 def setup(bot: commands.Bot):
