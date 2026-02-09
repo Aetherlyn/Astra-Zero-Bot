@@ -96,6 +96,18 @@ def character_sheet(guild, char):
         )
 
         embed.add_field(name=SPACER, value=SPACER, inline=False)
+
+        # === Owner ===
+
+        owner = guild.get_member(char["user_id"])
+        if owner:
+            owner_name = owner.global_name
+            embed.set_footer(
+                text=f"Character belongs to {owner_name}",
+                icon_url=owner.display_avatar.url
+        )
+        else:
+            embed.set_footer(text="Character owner unknown")
         
         return embed
 
