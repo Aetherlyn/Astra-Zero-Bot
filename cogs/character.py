@@ -138,6 +138,7 @@ class Character(commands.Cog):
 
     # === Commands ===
 
+     # === Char ===
     @commands.group(invoke_without_command=True)
     async def char(self, ctx):
     
@@ -150,6 +151,7 @@ class Character(commands.Cog):
 
         await ctx.send(embed=embed)
 
+     # === Char Set ===
     @char.command()
     async def set(self, ctx, field: str, *, value: str):
         field = field.lower()
@@ -192,12 +194,32 @@ class Character(commands.Cog):
         write_character(ctx.guild.id, ctx.author.id, field, value)
         await ctx.message.delete()
         await ctx.send(f"Updated **{field.capitalize()}** to **{value}**.")
-        
+          
     @set.error
     async def set_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Usage: !char set <field> <value>\nExample: !char set hp 24")
 
+     # === Char View ===
+   
+    @char.command()
+    async def view(self, ctx, member: discord.Member):
+        char = read_character(ctx.guild.id, member.id)
+
+        if not char:
+            await ctx.send("Member has no active character.")
+            return
+        
+        embed = character_sheet(ctx.guild, char)
+    
+        await ctx.send(embed=embed)
+
+    @view.error
+    async def set_error(self, ctx: commands.Context, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Usage: !char view <@member>")
+
+     # === Insp ===
     @commands.group(invoke_without_command=True)   
     async def insp(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
