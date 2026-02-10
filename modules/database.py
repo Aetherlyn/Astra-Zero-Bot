@@ -25,19 +25,23 @@ def init_db():
                 race TEXT DEFAULT 'Unknown',
                 class TEXT DEFAULT 'Unknown',
                      
-                hp INTEGER DEFAULT 0,
-                ac INTEGER DEFAULT 0,
-                speed INTEGER DEFAULT 30,
+                hp INTEGER NOT NULL DEFAULT 0,
+                current_hp INTEGER NOT NULL DEFAULT 0,
+                temp_hp INTEGER NOT NULL DEFAULT 0,
+                max_hp_bonus NOT NULL INTEGER DEFAULT 0,
+                          
+                ac INTEGER NOT NULL DEFAULT 0,
+                speed INTEGER NOT NULL DEFAULT 30,
                 
-                strength INTEGER DEFAULT 10,
-                dexterity INTEGER DEFAULT 10,
-                constitution INTEGER DEFAULT 10,
-                intelligence INTEGER DEFAULT 10,
-                wisdom INTEGER DEFAULT 10,
-                charisma INTEGER DEFAULT 10,
+                strength INTEGER NOT NULL DEFAULT 10,
+                dexterity INTEGER NOT NULL DEFAULT 10,
+                constitution INTEGER NOT NULL DEFAULT 10,
+                intelligence INTEGER NOT NULLDEFAULT 10,
+                wisdom INTEGER NOT NULL DEFAULT 10,
+                charisma INTEGER NOT NULL DEFAULT 10,
                 
-                proficiency INTEGER DEFAULT 2,
-                initiative INTEGER DEFAULT 0,
+                proficiency INTEGER NOT NULL DEFAULT 2,
+                initiative INTEGER NOT NULL DEFAULT 0,
                 inspiration INTEGER NOT NULL DEFAULT 0,
 
                 weapons TEXT DEFAULT '',
@@ -68,7 +72,7 @@ def read_character(guild_id: int, user_id: int):
     
 def write_character(guild_id, user_id, field, value):
     allowed_fields = {
-        "name","race","class","hp","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration"
+        "name","race","class","hp","current_hp","temp_hp","max_hp","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration"
     }
 
     if field not in allowed_fields:
