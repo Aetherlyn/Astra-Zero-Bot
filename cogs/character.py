@@ -138,7 +138,8 @@ class Character(commands.Cog):
 
     # === Commands ===
 
-     # === Char ===
+    # === Char ===
+
     @commands.group(invoke_without_command=True)
     async def char(self, ctx):
     
@@ -152,6 +153,7 @@ class Character(commands.Cog):
         await ctx.send(embed=embed)
 
      # === Char Set ===
+    
     @char.command()
     async def set(self, ctx, field: str, *, value: str):
         field = field.lower()
@@ -222,6 +224,9 @@ class Character(commands.Cog):
             await ctx.send("Could not find a member. Mention them or use their username.")
 
      # === Insp ===
+   
+    # === Insp ===
+
     @commands.group(invoke_without_command=True)   
     async def insp(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
@@ -288,6 +293,13 @@ class Character(commands.Cog):
     async def set_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MemberNotFound):
             await ctx.send("Could not find a member. Mention them or use their username.")
+
+    # === HP ===
+    @commands.command()
+    async def hp(self, ctx):
+        char = read_character(ctx.guild.id, ctx.author.id)
+
+        await ctx.send(f"HP: {char['current_hp']} / {char['hp']}")
 
 
 def setup(bot: commands.Bot):
