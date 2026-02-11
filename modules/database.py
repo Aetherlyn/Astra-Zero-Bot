@@ -28,7 +28,7 @@ def init_db():
                 hp INTEGER NOT NULL DEFAULT 0,
                 current_hp INTEGER NOT NULL DEFAULT 0,
                 temp_hp INTEGER NOT NULL DEFAULT 0,
-                max_hp_bonus NOT NULL INTEGER DEFAULT 0,
+                max_hp_bonus INTEGER NOT NULL DEFAULT 0,
                           
                 ac INTEGER NOT NULL DEFAULT 0,
                 speed INTEGER NOT NULL DEFAULT 30,
@@ -36,7 +36,7 @@ def init_db():
                 strength INTEGER NOT NULL DEFAULT 10,
                 dexterity INTEGER NOT NULL DEFAULT 10,
                 constitution INTEGER NOT NULL DEFAULT 10,
-                intelligence INTEGER NOT NULLDEFAULT 10,
+                intelligence INTEGER NOT NULL DEFAULT 10,
                 wisdom INTEGER NOT NULL DEFAULT 10,
                 charisma INTEGER NOT NULL DEFAULT 10,
                 
