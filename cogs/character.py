@@ -28,7 +28,10 @@ def character_sheet(guild, char):
         embed.add_field(name=SPACER, value=SPACER, inline=False)
 
         # === Main Combat Stats ===
-        embed.add_field(name="HP", value=f"{char['hp']} ({char['current_hp']})", inline=True)
+        embed.add_field(
+            name="HP", 
+            value=f"{char['current_hp']}/{char['hp'] + char['max_hp_bonus']} ({char['temp_hp']})", 
+            inline=True)
         embed.add_field(name="AC", value=f"{char['ac']}", inline=True)
         embed.add_field(name="Speed", value=f"{char['speed']}", inline=True)
         embed.add_field(name="Inspiration", value=f"{char['inspiration']}", inline=True)
@@ -299,7 +302,7 @@ class Character(commands.Cog):
     async def hp(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
 
-        await ctx.send(f"HP: {char['current_hp']} / {char['hp']}")
+        await ctx.send(f"{char['current_hp']}/{char['hp'] + char['max_hp_bonus']} ({char['temp_hp']})")
 
     @commands.command()
     async def rest(self, ctx):
@@ -308,10 +311,24 @@ class Character(commands.Cog):
         max_hp = char['hp']
 
         write_character(ctx.guild.id, ctx.author.id, 'current_hp', max_hp)
+        write_character(ctx.guild.id, ctx.author.id, 'max_hp_bonus', 0)
+        write_character(ctx.guild.id, ctx.author.id, 'temp_hp', 0)
         
         char = read_character(ctx.guild.id, ctx.author.id)
 
         await ctx.send(f"You now have {char['current_hp']} HP ")
+    
+    @commands.command()
+    async def temp(self, ctx, value: int):
+        write_character(ctx.guild.id, ctx.author.id, 'temp_hp', value)
+
+        await ctx.send(f"You have gained {value} temporary hit points. ")
+
+    @commands.group(invoke_without_command=True)
+    async def maxhp(self, ctx, value: int):
+        write_character(ctx.guild.id, ctx.author.id, 'max_hp_bonus', value)
+
+        await ctx.send(f"You have gained {value} max hp capacity to total of . ")
 
 
 def setup(bot: commands.Bot):
