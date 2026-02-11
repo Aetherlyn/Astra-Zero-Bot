@@ -324,11 +324,15 @@ class Character(commands.Cog):
 
         await ctx.send(f"You have gained {value} temporary hit points. ")
 
-    @commands.group(invoke_without_command=True)
+    @commands.command()
     async def maxhp(self, ctx, value: int):
         write_character(ctx.guild.id, ctx.author.id, 'max_hp_bonus', value)
 
-        await ctx.send(f"You have gained {value} max hp capacity to total of . ")
+        char = read_character(ctx.guild.id, ctx.author.id)
+
+        true_capacity = char['hp'] + char['max_hp_bonus']
+
+        await ctx.send(f"You have gained {value} max hp capacity to total of {true_capacity}")
 
 
 def setup(bot: commands.Bot):

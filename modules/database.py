@@ -72,7 +72,7 @@ def read_character(guild_id: int, user_id: int):
     
 def write_character(guild_id, user_id, field, value):
     allowed_fields = {
-        "name","race","class","hp","current_hp","temp_hp","max_hp","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration"
+        "name","race","class","hp","current_hp","temp_hp","max_hp_bonus","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration"
     }
 
     if field not in allowed_fields:
