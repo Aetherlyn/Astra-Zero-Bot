@@ -330,6 +330,11 @@ class Character(commands.Cog):
         char = read_character(ctx.guild.id, ctx.author.id)
         
         new_health = char['current_hp'] + value
+        
+        max_cap = char['hp'] + value
+        if new_health > max_cap:
+            new_health = max_cap
+       
         write_character(ctx.guild.id, ctx.author.id, 'current_hp', new_health)
 
         
@@ -353,6 +358,7 @@ class Character(commands.Cog):
 
         await ctx.send(f"You have suffered **{damage}** points of damage. Your current health: **{char['current_hp']}**")
 
+    
 
 
         
