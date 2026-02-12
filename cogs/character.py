@@ -316,13 +316,13 @@ class Character(commands.Cog):
         
         char = read_character(ctx.guild.id, ctx.author.id)
 
-        await ctx.send(f"You now have {char['current_hp']} HP ")
+        await ctx.send(f"You now have **{char['current_hp']}** HP ")
     
     @hp.command()
     async def temp(self, ctx, value: int):
         write_character(ctx.guild.id, ctx.author.id, 'temp_hp', value)
 
-        await ctx.send(f"You have gained {value} temporary hit points. ")
+        await ctx.send(f"You have gained **{value}** temporary hit points. ")
 
     @hp.command()
     async def addmax(self, ctx, value: int):
@@ -335,8 +335,27 @@ class Character(commands.Cog):
         
         true_capacity = char['hp'] + char['max_hp_bonus']
 
-        await ctx.send(f"You have gained {value} max hp capacity to total of {true_capacity}")
+        await ctx.send(f"You have gained **{value}** max hp capacity to total of **{true_capacity}**")
 
+    @hp.command()
+    async def damage(self, ctx, value: int):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        damage = value
+        health = char['current_hp']
+
+        final_health = health - damage
+
+        if final_health <= 0:
+            final_health = 0
+        
+        write_character(ctx.guild.id, ctx.author.id, 'current_hp', final_health)
+        char = read_character(ctx.guild.id, ctx.author.id)
+
+        await ctx.send(f"You have suffered **{damage}** points of damage. Your current health: **{char['current_hp']}**")
+
+
+
+        
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
