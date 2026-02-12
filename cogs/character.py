@@ -327,10 +327,12 @@ class Character(commands.Cog):
     @hp.command()
     async def addmax(self, ctx, value: int):
         write_character(ctx.guild.id, ctx.author.id, 'max_hp_bonus', value)
-        write_character(ctx.guild.id, ctx.author.id, 'hp', value)
-
         char = read_character(ctx.guild.id, ctx.author.id)
+        
+        new_health = char['current_hp'] + value
+        write_character(ctx.guild.id, ctx.author.id, 'current_hp', new_health)
 
+        
         true_capacity = char['hp'] + char['max_hp_bonus']
 
         await ctx.send(f"You have gained {value} max hp capacity to total of {true_capacity}")
