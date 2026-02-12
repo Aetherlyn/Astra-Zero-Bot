@@ -348,6 +348,20 @@ class Character(commands.Cog):
         damage = value
         health = char['current_hp']
 
+        if char['temp_hp'] > 0:
+            temp_hp = char['temp_hp']
+            remaining_temp_hp = temp_hp - damage 
+            
+            if remaining_temp_hp < 0:
+                remaining_temp_hp = 0
+
+            write_character(ctx.guild.id, ctx.author.id, 'temp_hp', remaining_temp_hp)
+
+            damage = damage - temp_hp
+
+        if damage < 0:
+            damage = 0
+
         final_health = health - damage
 
         if final_health <= 0:
