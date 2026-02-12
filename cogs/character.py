@@ -298,13 +298,13 @@ class Character(commands.Cog):
             await ctx.send("Could not find a member. Mention them or use their username.")
 
     # === HP ===
-    @commands.command()
+    @commands.group(invoke_without_command=True)
     async def hp(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
 
         await ctx.send(f"{char['current_hp']}/{char['hp'] + char['max_hp_bonus']} ({char['temp_hp']})")
 
-    @commands.command()
+    @hp.command()
     async def rest(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
         
@@ -318,15 +318,16 @@ class Character(commands.Cog):
 
         await ctx.send(f"You now have {char['current_hp']} HP ")
     
-    @commands.command()
+    @hp.command()
     async def temp(self, ctx, value: int):
         write_character(ctx.guild.id, ctx.author.id, 'temp_hp', value)
 
         await ctx.send(f"You have gained {value} temporary hit points. ")
 
-    @commands.command()
-    async def maxhp(self, ctx, value: int):
+    @hp.command()
+    async def addmax(self, ctx, value: int):
         write_character(ctx.guild.id, ctx.author.id, 'max_hp_bonus', value)
+        write_character(ctx.guild.id, ctx.author.id, 'hp', value)
 
         char = read_character(ctx.guild.id, ctx.author.id)
 
