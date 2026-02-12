@@ -359,9 +359,23 @@ class Character(commands.Cog):
         await ctx.send(f"You have suffered **{damage}** points of damage. Your current health: **{char['current_hp']}**")
 
     
+    @hp.command()
+    async def heal(self, ctx, value: int):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        heal = value
+        current_health = char['current_hp']
+        max_health = char['hp'] + char['max_hp_bonus']
 
+        total_health = current_health + heal
 
-        
+        if total_health > max_health:
+            total_health = max_health
+
+        write_character(ctx.guild.id, ctx.author.id, 'current_hp', total_health)
+        char = read_character(ctx.guild.id, ctx.author.id)
+
+        await ctx.send(f"You have healed **{heal}** points. Your current health: **{char['current_hp']}**")
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
