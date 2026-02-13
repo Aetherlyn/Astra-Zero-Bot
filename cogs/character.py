@@ -404,6 +404,7 @@ class Character(commands.Cog):
     async def remove(self, ctx, value):
         char = read_character(ctx.guild.id, ctx.author.id)
         message = value.lower()
+        max_hp_value = char['max_hp_bonus']
 
         if message == "temp" and char['temp_hp'] >= 1:
             write_character(ctx.guild.id, ctx.author.id,'temp_hp', 0 )
@@ -414,7 +415,10 @@ class Character(commands.Cog):
             return
         
         if message == "maxhp" and char['max_hp_bonus'] >= 1:
+            current_health = char['current_hp']
+            new_health = current_health - max_hp_value
             write_character(ctx.guild.id, ctx.author.id,'max_hp_bonus', 0 )
+            write_character(ctx.guild.id, ctx.author.id,'current_hp', new_health )
             await ctx.send(f"Removed **all** maximum hit points bonus.")
             return
         elif message == "temp" and char['temp_hp'] == 0:
