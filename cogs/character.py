@@ -335,7 +335,7 @@ class Character(commands.Cog):
         await ctx.send(f"You have gained **{value}** temporary hit points. ")
 
     @hp.command()
-    async def addmax(self, ctx, value: int):
+    async def maxhp(self, ctx, value: int):
         write_character(ctx.guild.id, ctx.author.id, 'max_hp_bonus', value)
         char = read_character(ctx.guild.id, ctx.author.id)
         
@@ -399,6 +399,29 @@ class Character(commands.Cog):
         char = read_character(ctx.guild.id, ctx.author.id)
 
         await ctx.send(f"You have healed **{heal}** points. Your current health: **{char['current_hp']}**")
+
+    @hp.command()
+    async def remove(self, ctx, value):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        message = value.lower()
+
+        if message == "temp" and char['temp_hp'] >= 1:
+            write_character(ctx.guild.id, ctx.author.id,'temp_hp', 0 )
+            await ctx.send(f"Removed **all** temporary hit points.")
+            return
+        elif message == "temp" and char['temp_hp'] == 0:
+            await ctx.send(f"You dont have **any** temporary hitpoints.")
+            return
+        
+        if message == "maxhp" and char['max_hp_bonus'] >= 1:
+            write_character(ctx.guild.id, ctx.author.id,'max_hp_bonus', 0 )
+            await ctx.send(f"Removed **all** maximum hit points bonus.")
+            return
+        elif message == "temp" and char['temp_hp'] == 0:
+            await ctx.send(f"You dont have **any** temporary hitpoints.")
+            return
+        
+        await ctx.send("Could not found a match. **Usage:** !hp remove maxhp/temp.")
 
 
 def setup(bot: commands.Bot):
