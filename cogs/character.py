@@ -13,106 +13,109 @@ allowed_commands = {
 
 # === Character Sheet Template ===
 def character_sheet(guild, char):
-        embed = discord.Embed(
-            title = f"{char['name']}",
-            color = discord.Color.dark_gold()
-        )
+    max_hp = char['hp'] + char['max_hp_bonus']
+    hp_text = f"{char['current_hp']}/{max_hp}"
 
-        SPACER = "\u200b"
+    if char['temp_hp'] > 0:
+        hp_text += f" ({char['temp_hp']})"
 
-        # === Title Section ===
-        embed.description = (
-            f"**Race:** {char['race']}     **Class & Level:** {char['class']}"
-        )
+    embed = discord.Embed(
+        title = f"{char['name']}",
+        color = discord.Color.dark_gold()
+    )
 
-        embed.add_field(name=SPACER, value=SPACER, inline=False)
+    SPACER = "\u200b"
 
-        # === Main Combat Stats ===
-        embed.add_field(
-            name="HP", 
-            value=f"{char['current_hp']}/{char['hp'] + char['max_hp_bonus']} ({char['temp_hp']})", 
-            inline=True)
-        embed.add_field(name="AC", value=f"{char['ac']}", inline=True)
-        embed.add_field(name="Speed", value=f"{char['speed']}", inline=True)
-        embed.add_field(name="Inspiration", value=f"{char['inspiration']}", inline=True)
+    # === Title Section ===
+    embed.description = (
+        f"**Race:** {char['race']}     **Class & Level:** {char['class']}"
+    )
 
-        embed.add_field(name=SPACER, value=SPACER, inline=False)
+    embed.add_field(name=SPACER, value=SPACER, inline=False)
 
-        # === Ability Scores ===
+    # === Main Combat Stats ===
+    embed.add_field(name="HP", value=hp_text, inline=True)
+    embed.add_field(name="AC", value=f"{char['ac']}", inline=True)
+    embed.add_field(name="Speed", value=f"{char['speed']}", inline=True)
+    embed.add_field(name="Inspiration", value=f"{char['inspiration']}", inline=True)
 
-        embed.add_field(name="STR", value=f"{char['strength']}", inline=True)
-        embed.add_field(name="DEX", value=f"{char['dexterity']}", inline=True)
-        embed.add_field(name="CON", value=f"{char['constitution']}", inline=True)
+    embed.add_field(name=SPACER, value=SPACER, inline=False)
 
-        embed.add_field(name="INT", value=f"{char['intelligence']}", inline=True)
-        embed.add_field(name="WIS", value=f"{char['wisdom']}", inline=True)
-        embed.add_field(name="CHR", value=f"{char['charisma']}", inline=True)
+    # === Ability Scores ===
 
-        embed.add_field(name=SPACER, value=SPACER, inline=False)
+    embed.add_field(name="STR", value=f"{char['strength']}", inline=True)
+    embed.add_field(name="DEX", value=f"{char['dexterity']}", inline=True)
+    embed.add_field(name="CON", value=f"{char['constitution']}", inline=True)
 
-        # === Bonuses Section ===
+    embed.add_field(name="INT", value=f"{char['intelligence']}", inline=True)
+    embed.add_field(name="WIS", value=f"{char['wisdom']}", inline=True)
+    embed.add_field(name="CHR", value=f"{char['charisma']}", inline=True)
 
-        embed.add_field(
-            name="Bonuses",
-            value = f"**Proficiency:** {char['proficiency']}\n **Initiative:** {char['initiative']}",
-            inline=False
-        )
+    embed.add_field(name=SPACER, value=SPACER, inline=False)
 
-        embed.add_field(name=SPACER, value=SPACER, inline=False)
-        
-        # === Weapon Proficiencies ===
+    # === Bonuses Section ===
 
-        embed.add_field(
-            name="Weapon Proficiencies",
-            value = f"{char['weapons']}",
-            inline=False
-        )
+    embed.add_field(
+        name="Bonuses",
+        value = f"**Proficiency:** {char['proficiency']}\n **Initiative:** {char['initiative']}",
+        inline=False
+    )
 
-        embed.add_field(name=SPACER, value=SPACER, inline=False)
+    embed.add_field(name=SPACER, value=SPACER, inline=False)
+    
+    # === Weapon Proficiencies ===
 
-        # === Armor Proficiencies ===
+    embed.add_field(
+        name="Weapon Proficiencies",
+        value = f"{char['weapons']}",
+        inline=False
+    )
 
-        embed.add_field(
-            name="Armor Proficiencies",
-            value = f"{char['armor']}",
-            inline=False
-        )
+    embed.add_field(name=SPACER, value=SPACER, inline=False)
 
-        embed.add_field(name=SPACER, value=SPACER, inline=False)
+    # === Armor Proficiencies ===
 
-        # === Tool Proficiencies ===
+    embed.add_field(
+        name="Armor Proficiencies",
+        value = f"{char['armor']}",
+        inline=False
+    )
 
-        embed.add_field(
-            name="Tool Proficiencies",
-            value = f"{char['tools']}",
-            inline=False
-        )
+    embed.add_field(name=SPACER, value=SPACER, inline=False)
 
-        embed.add_field(name=SPACER, value=SPACER, inline=False)
+    # === Tool Proficiencies ===
 
-        # === Languages ===
+    embed.add_field(
+        name="Tool Proficiencies",
+        value = f"{char['tools']}",
+        inline=False
+    )
 
-        embed.add_field(
-            name="Languages",
-            value = f"{char['languages']}",
-            inline=False
-        )
+    embed.add_field(name=SPACER, value=SPACER, inline=False)
 
-        embed.add_field(name=SPACER, value=SPACER, inline=False)
+    # === Languages ===
 
-        # === Owner ===
+    embed.add_field(
+        name="Languages",
+        value = f"{char['languages']}",
+        inline=False
+    )
 
-        owner = guild.get_member(char["user_id"])
-        if owner:
-            owner_name = owner.global_name
-            embed.set_footer(
-                text=f"Character belongs to {owner_name}",
-                icon_url=owner.display_avatar.url
-        )
-        else:
-            embed.set_footer(text="Character owner unknown")
-        
-        return embed
+    embed.add_field(name=SPACER, value=SPACER, inline=False)
+
+    # === Owner ===
+
+    owner = guild.get_member(char["user_id"])
+    if owner:
+        owner_name = owner.global_name
+        embed.set_footer(
+            text=f"Character belongs to {owner_name}",
+            icon_url=owner.display_avatar.url
+    )
+    else:
+        embed.set_footer(text="Character owner unknown")
+    
+    return embed
 
 class Character(commands.Cog):
     def __init__(self, bot):
@@ -302,7 +305,14 @@ class Character(commands.Cog):
     async def hp(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
 
-        await ctx.send(f"{char['current_hp']}/{char['hp'] + char['max_hp_bonus']} ({char['temp_hp']})")
+        max_hp = char['hp'] + char['max_hp_bonus']
+        hp_text = f"{char['current_hp']}/{max_hp}"
+
+        if char['temp_hp'] > 0:
+            hp_text += f" ({char['temp_hp']})"
+
+
+        await ctx.send(hp_text)
 
     @hp.command()
     async def rest(self, ctx):
