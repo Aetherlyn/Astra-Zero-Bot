@@ -137,10 +137,23 @@ class Character(commands.Cog):
             return False
         else:
             return True
-        
+
+    # === General Error Handler ===
+
     async def cog_command_error(self, ctx, error):
+        
+        # === Char ===
+        
         if isinstance(error, CheckFailure):
             return
+
+        # === HP ===
+
+        if ctx.command.root_parent == self.hp:
+            if isinstance(error, commands.MissingRequiredArgument):
+                await ctx.send("You must provide a **number**. **Usage:** !hp <subcommand> <amount>")
+            elif isinstance(error, commands.BadArgument):
+                await ctx.send("The amount must be a valid **number**.")
 
     # === Commands ===
 
