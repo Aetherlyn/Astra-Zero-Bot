@@ -1,5 +1,8 @@
 import sqlite3
+import logging
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 DB_PATH = Path("data/astra.db")
 
@@ -76,6 +79,7 @@ def write_character(guild_id, user_id, field, value):
     }
 
     if field not in allowed_fields:
+        logger.error("Attempted to update invalid field: %s", field)
         raise ValueError("Invalid field")
     
     with get_conn() as conn:
