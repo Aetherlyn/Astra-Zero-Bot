@@ -52,6 +52,15 @@ def init_db():
                 tools TEXT DEFAULT '',
                 languages TEXT DEFAULT '',
                      
+                hd_d6 INTEGER NOT NULL DEFAULT 0,
+                current_hd_d6 INTEGER NOT NULL DEFAULT 0,
+                hd_d8 INTEGER NOT NULL DEFAULT 0,
+                current_hd_d8 INTEGER NOT NULL DEFAULT 0,
+                hd_d10 INTEGER NOT NULL DEFAULT 0,
+                current_hd_d10 INTEGER NOT NULL DEFAULT 0,
+                hd_d12 INTEGER NOT NULL DEFAULT 0,
+                current_hd_d12 INTEGER NOT NULL DEFAULT 0,
+                     
                 UNIQUE (guild_id, user_id)
             )
         """)
@@ -75,7 +84,8 @@ def read_character(guild_id: int, user_id: int):
     
 def write_character(guild_id, user_id, field, value):
     allowed_fields = {
-        "name","race","class","hp","current_hp","temp_hp","max_hp_bonus","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration"
+        "name","race","class","hp","current_hp","temp_hp","max_hp_bonus","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration","hd_d6",
+        "current_hd_d6","hd_d8","current_hd_d8","hd_d10","current_hd_d10","hd_d12","current_hd_d12"
     }
 
     if field not in allowed_fields:
