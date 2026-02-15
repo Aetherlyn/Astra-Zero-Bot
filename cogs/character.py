@@ -13,12 +13,15 @@ allowed_commands = {
 
 # === Character Sheet Template ===
 def character_sheet(guild, char):
+
+    # === HP Adjuster ===
     max_hp = char['hp'] + char['max_hp_bonus']
     hp_text = f"{char['current_hp']}/{max_hp}"
 
     if char['temp_hp'] > 0:
         hp_text += f" ({char['temp_hp']})"
 
+    # === Character Sheet ===
     embed = discord.Embed(
         title = f"{char['name']}",
         color = discord.Color.dark_gold()
@@ -57,7 +60,7 @@ def character_sheet(guild, char):
 
     embed.add_field(
         name="Bonuses",
-        value = f"**Proficiency:** {char['proficiency']}\n **Initiative:** {char['initiative']}",
+        value = f"**Proficiency:** {char['proficiency']} | **Initiative:** {char['initiative']}",
         inline=False
     )
 
@@ -439,6 +442,27 @@ class Character(commands.Cog):
             return
         
         await ctx.send("Could not found a match. **Usage:** !hp remove maxhp/temp.")
+
+    # === HD ===
+    @commands.group(invoke_without_command=True)
+    async def hd(self, ctx):
+        char = read_character(ctx.guild.id, ctx.author.id)
+
+        msg = "**Hit Dice:**"
+
+        if char['hd_d6'] > 0:
+            msg += f" {char['current_hd_d6']}/{char['hd_d6']}d6,"
+        if char['hd_d8'] > 0:
+            msg += f" {char['current_hd_d8']}/{char['hd_d8']}d8,"
+        if char['hd_d10'] > 0:
+            msg += f" {char['current_hd_d10']}/{char['hd_d10']}d10,"
+        if char['hd_d12'] > 0:
+            msg += f" {char['current_hd_d12']}/{char['hd_d12']}d12,"
+
+        if msg == "**Hit Dice:**":
+            msg = "You do not have any **hit dice**."
+            
+        await ctx.send(msg)
 
 
 def setup(bot: commands.Bot):
