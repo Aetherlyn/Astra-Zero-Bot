@@ -517,6 +517,13 @@ class Character(commands.Cog):
             await ctx.send("Invalid dice type. **Usage:** !hd add <amount> <dice type>.")
             return
         
+        if char[check_type] == 0:
+            await ctx.send(f"You cannot restore **{type}** type of hit dice.")
+            return
+        elif char[field_type] == char[check_type]:
+            await ctx.send(f"Your **{type}** hit dices are full.")
+            return
+            
         new_amount = char[field_type] + amount
 
         if new_amount > char[f"hd_{type}"]:
