@@ -451,13 +451,13 @@ class Character(commands.Cog):
         msg = "**Hit Dice:**"
 
         if char['hd_d6'] > 0:
-            msg += f" {char['current_hd_d6']}/{char['hd_d6']}d6,"
+            msg += f" \n{char['current_hd_d6']}/{char['hd_d6']}d6"
         if char['hd_d8'] > 0:
-            msg += f" {char['current_hd_d8']}/{char['hd_d8']}d8,"
+            msg += f" \n{char['current_hd_d8']}/{char['hd_d8']}d8"
         if char['hd_d10'] > 0:
-            msg += f" {char['current_hd_d10']}/{char['hd_d10']}d10,"
+            msg += f" \n{char['current_hd_d10']}/{char['hd_d10']}d10"
         if char['hd_d12'] > 0:
-            msg += f" {char['current_hd_d12']}/{char['hd_d12']}d12,"
+            msg += f" \n{char['current_hd_d12']}/{char['hd_d12']}d12"
 
         if msg == "**Hit Dice:**":
             msg = "You do not have any **hit dice**."
