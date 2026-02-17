@@ -489,7 +489,7 @@ class Character(commands.Cog):
         dice_types = ["d6", "d8", "d10", "d12"]
 
         type = type.lower()
-        field_type = f"hd_{type}"
+        field_type = f"current_hd_{type}"
 
         if type not in dice_types:
             await ctx.send("Invalid dice type. **Usage:** !hd add <amount> <dice type>.")
