@@ -483,7 +483,7 @@ class Character(commands.Cog):
         await ctx.send(f"Your **{type}** capacity increased by **{amount}**")
     
     
-    hd.command()
+    @hd.command()
     async def use(self, ctx, amount: int, type: str):
         char = read_character(ctx.guild.id, ctx.author.id)
         dice_types = ["d6", "d8", "d10", "d12"]
@@ -503,6 +503,28 @@ class Character(commands.Cog):
         write_character(ctx.guild.id, ctx.author.id, field_type, new_amount)
 
         await ctx.send(f"You used **{amount}** of your **{type}** hit dices.")
+
+    @hd.command()
+    async def restore(self, ctx, amount: int, type: str):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        dice_types = ["d6", "d8", "d10", "d12"]
+
+        type = type.lower()
+        field_type = f"current_hd_{type}"
+        check_type = f"hd_{type}"
+
+        if type not in dice_types:
+            await ctx.send("Invalid dice type. **Usage:** !hd add <amount> <dice type>.")
+            return
+        
+        new_amount = char[field_type] + amount
+
+        if new_amount > char[f"hd_{type}"]:
+            new_amount = char[f"hd_{type}"]
+
+        write_character(ctx.guild.id, ctx.author.id, field_type, new_amount)
+
+        await ctx.send(f"You restored **{amount}** of your **{type}** hit dices.")
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
