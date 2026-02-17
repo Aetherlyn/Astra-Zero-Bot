@@ -529,9 +529,11 @@ class Character(commands.Cog):
         if new_amount > char[f"hd_{type}"]:
             new_amount = char[f"hd_{type}"]
 
+        restored_amount = new_amount - char[field_type]
+
         write_character(ctx.guild.id, ctx.author.id, field_type, new_amount)
 
-        await ctx.send(f"You restored **{amount}** of your **{type}** hit dices.")
+        await ctx.send(f"You restored **{restored_amount}** of your **{type}** hit dices.")
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
