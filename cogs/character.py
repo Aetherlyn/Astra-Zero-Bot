@@ -465,7 +465,7 @@ class Character(commands.Cog):
         await ctx.send(msg)
 
     @hd.command()
-    async def add(self, ctx, amount: int, type: str):
+    async def addmax(self, ctx, amount: int, type: str):
         char = read_character(ctx.guild.id, ctx.author.id)
         dice_types = ["d6", "d8", "d10", "d12"]
 
@@ -481,6 +481,27 @@ class Character(commands.Cog):
         write_character(ctx.guild.id, ctx.author.id, field_type, new_amount)
 
         await ctx.send(f"Your **{type}** capacity increased by **{amount}**")
+
+    @hd.command()
+    async def reducemax(self, ctx, amount: int, type: str):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        dice_types = ["d6", "d8", "d10", "d12"]
+
+        type = type.lower()
+
+        if type not in dice_types:
+            await ctx.send("Invalid dice type. **Usage:** !hd add <amount> <dice type>.")
+            return
+        
+        field_type = f"hd_{type}"
+        new_amount = char[field_type] - amount
+
+        if new_amount < 0:
+            new_amount == 0
+        
+        write_character(ctx.guild.id, ctx.author.id, field_type, new_amount)
+
+        await ctx.send(f"Your **{type}** capacity decreased to **{amount}**")
     
     
     @hd.command()
