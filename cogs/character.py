@@ -494,12 +494,17 @@ class Character(commands.Cog):
             return
         
         field_type = f"hd_{type}"
+        check_type = f"current_hd_{type}"
         new_amount = char[field_type] - amount
 
         if new_amount < 0:
             new_amount == 0
-        
+
         write_character(ctx.guild.id, ctx.author.id, field_type, new_amount)
+
+        if char[check_type] > new_amount:
+            write_character(ctx.guild.id, ctx.author.id, check_type, new_amount)
+
 
         await ctx.send(f"Your **{type}** capacity decreased to **{amount}**")
     
