@@ -14,12 +14,21 @@ allowed_commands = {
 # === Character Sheet Template ===
 def character_sheet(guild, char):
 
-    # === HP Adjuster ===
+    # === HP Text ===
     max_hp = char['hp'] + char['max_hp_bonus']
     hp_text = f"{char['current_hp']}/{max_hp}"
 
     if char['temp_hp'] > 0:
         hp_text += f" ({char['temp_hp']})"
+
+    # === HD Text ===
+    hd_msg = "**Hit Dice:** "
+
+    for die in ["d6", "d8", "d10", "d12"]:
+        if char[f"hd_{die}"] > 0:
+            hd_msg += f"{char[f'current_hd_{die}']}/{char[f'hd_{die}']}{die}-"
+
+    hd_msg = hd_msg.rstrip("-")
 
     # === Character Sheet ===
     embed = discord.Embed(
@@ -59,7 +68,7 @@ def character_sheet(guild, char):
     # === Bonuses Section ===
 
     embed.add_field(
-        name="Hit Dices: ",
+        name=hd_msg,
         value = f"**Proficiency:** {char['proficiency']} | **Initiative:** {char['initiative']}",
         inline=False
     )
