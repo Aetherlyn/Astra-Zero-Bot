@@ -59,7 +59,7 @@ def character_sheet(guild, char):
     # === Bonuses Section ===
 
     embed.add_field(
-        name="Bonuses",
+        name="Hit Dices: ",
         value = f"**Proficiency:** {char['proficiency']} | **Initiative:** {char['initiative']}",
         inline=False
     )
@@ -450,14 +450,9 @@ class Character(commands.Cog):
 
         msg = "**Hit Dice:**"
 
-        if char['hd_d6'] > 0:
-            msg += f" \n{char['current_hd_d6']}/{char['hd_d6']}d6"
-        if char['hd_d8'] > 0:
-            msg += f" \n{char['current_hd_d8']}/{char['hd_d8']}d8"
-        if char['hd_d10'] > 0:
-            msg += f" \n{char['current_hd_d10']}/{char['hd_d10']}d10"
-        if char['hd_d12'] > 0:
-            msg += f" \n{char['current_hd_d12']}/{char['hd_d12']}d12"
+        for die in ["d6", "d8", "d10", "d12"]:
+            if char[f"hd_{die}"] > 0:
+                msg += f"\n{char[f'current_hd_{die}']}/{char[f'hd_{die}']}{die}"
 
         if msg == "**Hit Dice:**":
             msg = "You do not have any **hit dice**."
@@ -515,8 +510,7 @@ class Character(commands.Cog):
 
 
         await ctx.send(f"Your **{type}** hit dice capacity decreased to **{new_amount}**")
-    
-    
+        
     @hd.command()
     async def use(self, ctx, amount: int, type: str):
         char = read_character(ctx.guild.id, ctx.author.id)
