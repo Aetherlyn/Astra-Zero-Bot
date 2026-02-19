@@ -469,6 +469,10 @@ class Character(commands.Cog):
         char = read_character(ctx.guild.id, ctx.author.id)
         dice_types = ["d6", "d8", "d10", "d12"]
 
+        if amount <= 0:
+            await ctx.send("Amount must be greater than 0.")
+            return
+
         type = type.lower()
 
         if type not in dice_types:
@@ -487,6 +491,10 @@ class Character(commands.Cog):
         char = read_character(ctx.guild.id, ctx.author.id)
         dice_types = ["d6", "d8", "d10", "d12"]
 
+        if amount <= 0:
+            await ctx.send("Amount must be greater than 0.")
+            return
+
         type = type.lower()
 
         if type not in dice_types:
@@ -498,7 +506,7 @@ class Character(commands.Cog):
         new_amount = char[field_type] - amount
 
         if new_amount < 0:
-            new_amount == 0
+            new_amount = 0
 
         write_character(ctx.guild.id, ctx.author.id, field_type, new_amount)
 
@@ -506,13 +514,17 @@ class Character(commands.Cog):
             write_character(ctx.guild.id, ctx.author.id, check_type, new_amount)
 
 
-        await ctx.send(f"Your **{type}** capacity decreased to **{amount}**")
+        await ctx.send(f"Your **{type}** hit dice capacity decreased to **{new_amount}**")
     
     
     @hd.command()
     async def use(self, ctx, amount: int, type: str):
         char = read_character(ctx.guild.id, ctx.author.id)
         dice_types = ["d6", "d8", "d10", "d12"]
+
+        if amount <= 0:
+            await ctx.send("Amount must be greater than 0.")
+            return
 
         type = type.lower()
         field_type = f"current_hd_{type}"
@@ -534,6 +546,10 @@ class Character(commands.Cog):
     async def restore(self, ctx, amount: int, type: str):
         char = read_character(ctx.guild.id, ctx.author.id)
         dice_types = ["d6", "d8", "d10", "d12"]
+
+        if amount <= 0:
+            await ctx.send("Amount must be greater than 0.")
+            return
 
         type = type.lower()
         field_type = f"current_hd_{type}"
