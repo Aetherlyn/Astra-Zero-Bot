@@ -348,10 +348,27 @@ class Character(commands.Cog):
         write_character(ctx.guild.id, ctx.author.id, 'current_hp', max_hp)
         write_character(ctx.guild.id, ctx.author.id, 'max_hp_bonus', 0)
         write_character(ctx.guild.id, ctx.author.id, 'temp_hp', 0)
-        
+
+        hitdice_cap = 0
+
+        for die in ["hd_d6", "hd_d8", "hd_d10", "hd_d12"]:
+            if char[die] > 0:
+                hitdice_cap += char[die]
+            
+        hitdice_restore = hitdice_cap // 2
+
+        for hitdice in range(hitdice_restore):
+            char = read_character(ctx.guild.id, ctx.author.id)
+            for die in ["hd_d12", "hd_d10", "hd_d8", "hd_d6"]:
+                if char[f"current_{die}"] < char[die]:
+                    new_value = char[f"current_{die}"]
+                    new_value += 1
+                    write_character(ctx.guild.id, ctx.author.id, f"current_{die}", new_value)
+                    break
+
         char = read_character(ctx.guild.id, ctx.author.id)
 
-        await ctx.send(f"You now have **{char['current_hp']}** HP ")
+        await ctx.send(f"You now have **{char['current_hp']}** HP")
     
     @hp.command()
     async def temp(self, ctx, value: int):
