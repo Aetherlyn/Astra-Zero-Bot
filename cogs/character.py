@@ -611,25 +611,25 @@ class Character(commands.Cog):
             await ctx.send("You dont have any **exhaustion** points.")
         elif char['exhaustion'] == 1:
             await ctx.send('''
-                           You have 1 exhaustion point:\n
+                           You have **1** **exhaustion** points:\n
                            -You have **Disadvantage** on **ability checks**
                            ''')
         elif char['exhaustion'] == 2:
             await ctx.send('''
-                           You have 2 exhaustion point:\n
+                           You have **2** **exhaustion** points:\n
                            -You have **Disadvantage** on **ability checks**\n
                            -Your speed is **Halved**
                            ''')
         elif char['exhaustion'] == 3:
             await ctx.send('''
-                           You have 3 exhaustion point:\n
+                           You have **3** **exhaustion** points:\n
                            -You have **Disadvantage** on **ability checks**\n
                            -Your speed is **Halved**\n
                            -
                            ''')
         elif char['exhaustion'] == 4:
             await ctx.send('''
-                           You have 4 exhaustion point:\n
+                           You have **4** **exhaustion** points:\n
                            -You have **disadvantage** on **ability checks**\n
                            -Your speed is **halved**\n
                            -You have **disadvantage** on **attack rolls** and **saving throws**\n
@@ -637,7 +637,7 @@ class Character(commands.Cog):
                            ''')
         elif char['exhaustion'] == 5:
             await ctx.send('''
-                           You have 4 exhaustion point:\n
+                           You have **5** **exhaustion** points:\n
                            -You have **disadvantage** on **ability checks**\n
                            -Your speed is **halved**\n
                            -You have **disadvantage** on **attack rolls** and **saving throws**\n
@@ -646,7 +646,7 @@ class Character(commands.Cog):
                            ''')
         elif char['exhaustion'] == 6:
             await ctx.send('''
-                           You have 6 exhaustion point:\n
+                           You have **6** **exhaustion** points:\n
                            -Death
                            ''')
 
