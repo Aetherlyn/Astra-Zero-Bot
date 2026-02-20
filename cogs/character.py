@@ -329,7 +329,7 @@ class Character(commands.Cog):
         if isinstance(error, commands.MemberNotFound):
             await ctx.send("Could not find a member. Mention them or use their username.")
 
-    # === HP ===
+    # === Hit Points ===
     @commands.group(invoke_without_command=True)
     async def hp(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
@@ -473,7 +473,7 @@ class Character(commands.Cog):
         
         await ctx.send("Could not found a match. **Usage:** !hp remove maxhp/temp.")
 
-    # === HD ===
+    # === Hit Dice ===
     @commands.group(invoke_without_command=True)
     async def hd(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
@@ -600,6 +600,56 @@ class Character(commands.Cog):
         write_character(ctx.guild.id, ctx.author.id, field_type, new_amount)
 
         await ctx.send(f"You restored **{restored_amount}** of your **{type}** hit dices.")
+
+    # === Exhaustion ===
+
+    @commands.group(invoke_without_command=True)
+    async def exh(self, ctx):
+        char = read_character(ctx.guild.id, ctx.author.id)
+
+        if char['exhaustion'] == 0:
+            await ctx.send("You dont have any **exhaustion** points.")
+        elif char['exhaustion'] == 1:
+            await ctx.send('''
+                           You have 1 exhaustion point:\n
+                           -You have **Disadvantage** on **ability checks**
+                           ''')
+        elif char['exhaustion'] == 2:
+            await ctx.send('''
+                           You have 2 exhaustion point:\n
+                           -You have **Disadvantage** on **ability checks**\n
+                           -Your speed is **Halved**
+                           ''')
+        elif char['exhaustion'] == 3:
+            await ctx.send('''
+                           You have 3 exhaustion point:\n
+                           -You have **Disadvantage** on **ability checks**\n
+                           -Your speed is **Halved**\n
+                           -
+                           ''')
+        elif char['exhaustion'] == 4:
+            await ctx.send('''
+                           You have 4 exhaustion point:\n
+                           -You have **disadvantage** on **ability checks**\n
+                           -Your speed is **halved**\n
+                           -You have **disadvantage** on **attack rolls** and **saving throws**\n
+                           -Your hit point maximum is **halved**
+                           ''')
+        elif char['exhaustion'] == 5:
+            await ctx.send('''
+                           You have 4 exhaustion point:\n
+                           -You have **disadvantage** on **ability checks**\n
+                           -Your speed is **halved**\n
+                           -You have **disadvantage** on **attack rolls** and **saving throws**\n
+                           -Your **hit point** maximum is **halved**\n
+                           -Your **speed** reduced to **0**
+                           ''')
+        elif char['exhaustion'] == 6:
+            await ctx.send('''
+                           You have 6 exhaustion point:\n
+                           -Death
+                           ''')
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
