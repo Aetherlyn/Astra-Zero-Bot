@@ -69,7 +69,11 @@ def character_sheet(guild, char):
 
     embed.add_field(
         name=hd_msg,
-        value = f"**Proficiency:** {char['proficiency']} | **Initiative:** {char['initiative']}",
+        value = f'''
+        **Proficiency:** {char['proficiency']}\n
+        **Initiative:** {char['initiative']}\n
+        **Exhaustion:** {char['exhaustion']}
+        ''',
         inline=False
     )
 

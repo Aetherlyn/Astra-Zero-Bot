@@ -46,6 +46,7 @@ def init_db():
                 proficiency INTEGER NOT NULL DEFAULT 2,
                 initiative INTEGER NOT NULL DEFAULT 0,
                 inspiration INTEGER NOT NULL DEFAULT 0,
+                exhaustion INTEGER NOT NULL DEFAULT 0,
 
                 weapons TEXT DEFAULT '',
                 armor TEXT DEFAULT '',     
