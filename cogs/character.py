@@ -668,7 +668,21 @@ class Character(commands.Cog):
 
         write_character(ctx.guild.id, ctx.author.id, "exhaustion", new_exhaustion)
 
-        await ctx.send(f"You suffered an exhaustion point. You now have: **{new_exhaustion}**.")
+        await ctx.send(f"You suffer 1 level of **exhaustion**. You now have: **{new_exhaustion}**.")
+
+    @exh.command()
+    async def reduce(self, ctx):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        
+        if char['exhaustion'] == 0:
+            await ctx.send("You are not **exhausted**.")
+            return
+
+        new_exhaustion = char['exhaustion'] - 1
+
+        write_character(ctx.guild.id, ctx.author.id, "exhaustion", new_exhaustion)
+
+        await ctx.send(f"You shake off 1 level of **exhaustion**. You now have: **{new_exhaustion}**.")        
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
