@@ -662,7 +662,7 @@ class Character(commands.Cog):
 
         write_character(ctx.guild.id, ctx.author.id, "exhaustion", new_exhaustion)
 
-        await ctx.send(f"You suffered an exhaustion point. You have now: **{new_exhaustion}**.")
+        await ctx.send(f"You suffered an exhaustion point. You now have: **{new_exhaustion}**.")
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
