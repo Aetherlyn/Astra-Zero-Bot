@@ -650,6 +650,19 @@ class Character(commands.Cog):
                            -Death
                            ''')
 
+    @exh.command()
+    async def add(self, ctx):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        
+        if char['exhaustion'] == 6:
+            await ctx.send("You already have maximum possible amount of **exhaustion** points.")
+            return
+
+        new_exhaustion = char['exhaustion'] + 1
+
+        write_character(ctx.guild.id, ctx.author.id, "exhaustion", new_exhaustion)
+
+        await ctx.send(f"You suffered an exhaustion point. You have now: **{new_exhaustion}**.")
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
