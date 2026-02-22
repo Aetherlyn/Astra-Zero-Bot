@@ -342,46 +342,6 @@ class Character(commands.Cog):
 
 
         await ctx.send(hp_text)
-
-    @hp.command()
-    async def rest(self, ctx):
-        char = read_character(ctx.guild.id, ctx.author.id)
-        
-        max_hp = char['hp']
-
-        write_character(ctx.guild.id, ctx.author.id, 'current_hp', max_hp)
-        write_character(ctx.guild.id, ctx.author.id, 'max_hp_bonus', 0)
-        write_character(ctx.guild.id, ctx.author.id, 'temp_hp', 0)
-
-        hitdice_cap = 0
-
-        for die in ["hd_d6", "hd_d8", "hd_d10", "hd_d12"]:
-            if char[die] > 0:
-                hitdice_cap += char[die]
-            
-        hitdice_restore = hitdice_cap // 2
-
-        for hitdice in range(hitdice_restore):
-            char = read_character(ctx.guild.id, ctx.author.id)
-            for die in ["hd_d12", "hd_d10", "hd_d8", "hd_d6"]:
-                if char[f"current_{die}"] < char[die]:
-                    new_value = char[f"current_{die}"]
-                    new_value += 1
-                    write_character(ctx.guild.id, ctx.author.id, f"current_{die}", new_value)
-                    break
-
-        char = read_character(ctx.guild.id, ctx.author.id)
-       
-        msg = f"You now have **{char['current_hp']}** HP."
-
-        if char['exhaustion'] > 0:
-            new_exhaustion = char['exhaustion'] - 1
-            
-            msg += f"\nYou recover 1 level of **exhaustion**."
-
-            write_character(ctx.guild.id, ctx.author.id, 'exhaustion', new_exhaustion)
-
-        await ctx.send(msg)
     
     @hp.command()
     async def temp(self, ctx, value: int):
@@ -437,7 +397,6 @@ class Character(commands.Cog):
 
         await ctx.send(f"You have suffered **{damage}** points of damage. Your current health: **{char['current_hp']}**")
 
-    
     @hp.command()
     async def heal(self, ctx, value: int):
         char = read_character(ctx.guild.id, ctx.author.id)
@@ -609,6 +568,48 @@ class Character(commands.Cog):
         write_character(ctx.guild.id, ctx.author.id, field_type, new_amount)
 
         await ctx.send(f"You restored **{restored_amount}** of your **{type}** hit dices.")
+
+    # === Rest ===
+
+    @commands.command()
+    async def rest(self, ctx):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        
+        max_hp = char['hp']
+
+        write_character(ctx.guild.id, ctx.author.id, 'current_hp', max_hp)
+        write_character(ctx.guild.id, ctx.author.id, 'max_hp_bonus', 0)
+        write_character(ctx.guild.id, ctx.author.id, 'temp_hp', 0)
+
+        hitdice_cap = 0
+
+        for die in ["hd_d6", "hd_d8", "hd_d10", "hd_d12"]:
+            if char[die] > 0:
+                hitdice_cap += char[die]
+            
+        hitdice_restore = hitdice_cap // 2
+
+        for hitdice in range(hitdice_restore):
+            char = read_character(ctx.guild.id, ctx.author.id)
+            for die in ["hd_d12", "hd_d10", "hd_d8", "hd_d6"]:
+                if char[f"current_{die}"] < char[die]:
+                    new_value = char[f"current_{die}"]
+                    new_value += 1
+                    write_character(ctx.guild.id, ctx.author.id, f"current_{die}", new_value)
+                    break
+
+        char = read_character(ctx.guild.id, ctx.author.id)
+       
+        msg = f"You now have **{char['current_hp']}** HP."
+
+        if char['exhaustion'] > 0:
+            new_exhaustion = char['exhaustion'] - 1
+            
+            msg += f"\nYou recover 1 level of **exhaustion**."
+
+            write_character(ctx.guild.id, ctx.author.id, 'exhaustion', new_exhaustion)
+
+        await ctx.send(msg)
 
     # === Exhaustion ===
 
