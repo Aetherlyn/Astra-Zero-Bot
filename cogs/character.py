@@ -370,16 +370,16 @@ class Character(commands.Cog):
                     write_character(ctx.guild.id, ctx.author.id, f"current_{die}", new_value)
                     break
 
-        msg = f"You now have **{char['current_hp']}** HP"
+        char = read_character(ctx.guild.id, ctx.author.id)
+       
+        msg = f"You now have **{char['current_hp']}** HP."
 
         if char['exhaustion'] > 0:
             new_exhaustion = char['exhaustion'] - 1
             
-            msg += f"You recover 1 level of **exhaustion**, you now have {char['exhaustion']}."
+            msg += f"\nYou recover 1 level of **exhaustion**."
 
             write_character(ctx.guild.id, ctx.author.id, 'exhaustion', new_exhaustion)
-
-        char = read_character(ctx.guild.id, ctx.author.id)
 
         await ctx.send(msg)
     
