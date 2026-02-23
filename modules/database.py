@@ -63,19 +63,23 @@ def init_db():
                 current_hd_d12 INTEGER NOT NULL DEFAULT 0,
                      
                 athletics_prof INTEGER NOT NULL DEFAULT 0,
+                     
                 acrobatics_prof INTEGER NOT NULL DEFAULT 0,
                 sleight_of_hand_prof INTEGER NOT NULL DEFAULT 0,
                 stealth_prof INTEGER NOT NULL DEFAULT 0,
+                     
                 arcana_prof INTEGER NOT NULL DEFAULT 0,
                 history_prof INTEGER NOT NULL DEFAULT 0,
                 investigation_prof INTEGER NOT NULL DEFAULT 0,
                 nature_prof INTEGER NOT NULL DEFAULT 0,
                 religion_prof INTEGER NOT NULL DEFAULT 0,
+                     
                 animal_handling_prof INTEGER NOT NULL DEFAULT 0,
                 insight_prof INTEGER NOT NULL DEFAULT 0,
                 medicine_prof INTEGER NOT NULL DEFAULT 0,
                 perception_prof INTEGER NOT NULL DEFAULT 0,
                 survival_prof INTEGER NOT NULL DEFAULT 0,
+                     
                 deception_prof INTEGER NOT NULL DEFAULT 0,
                 intimidation_prof INTEGER NOT NULL DEFAULT 0,
                 performance_prof INTEGER NOT NULL DEFAULT 0,
@@ -105,7 +109,7 @@ def read_character(guild_id: int, user_id: int):
 def write_character(guild_id, user_id, field, value):
     allowed_fields = {
         "name","race","class","hp","current_hp","temp_hp","max_hp_bonus","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration","hd_d6",
-        "current_hd_d6","hd_d8","current_hd_d8","hd_d10","current_hd_d10","hd_d12","current_hd_d12","exhaustion"
+        "current_hd_d6","hd_d8","current_hd_d8","hd_d10","current_hd_d10","hd_d12","current_hd_d12","exhaustion","athletics_prof","acrobatics_prof","sleight_of_hand_prof","stealth_prof","arcana_prof","history_prof","investigation_prof","nature_prof","religion_prof","animal_handling_prof","insight_prof","medicine_prof","perception_prof","survival_prof","deception_prof","intimidation_prof","performance_prof","persuasion_prof"
     }
 
     if field not in allowed_fields:
