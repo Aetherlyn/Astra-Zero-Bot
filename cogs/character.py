@@ -697,11 +697,10 @@ class Character(commands.Cog):
     # === Proficiency ===
 
     @commands.command()
-    async def prof(self, ctx, prof: str, skill: str):
+    async def prof(self, ctx, prof: str, *, skill: str):
         char = read_character(ctx.guild.id, ctx.author.id)
-        skill = skill.lower().rstrip(" ")
-        prof = prof.lower().rstrip(" ")
-        field = ""
+        skill = skill.lower().strip()
+        prof = prof.lower().strip()
 
         allowed_skill_inputs = ["athletics","acrobatics","sleight of hand","stealth","arcana","history","investigation","nature","religion","animal handling","insight","medicine","perception","survival","deception","intimidation","performance","persuasion"]
         
@@ -716,8 +715,7 @@ class Character(commands.Cog):
             await ctx.send("Invalid **Skill** Type.")
             return
         
-        skill_key = skill.replace(" ", "_")
-        field = f"{skill_key}_prof"
+        field = f"{skill.replace(' ', '_')}_prof"
 
         allowed_prof_inputs = {
             "none": 0, 
