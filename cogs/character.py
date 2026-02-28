@@ -715,8 +715,9 @@ class Character(commands.Cog):
         if skill not in allowed_skill_inputs:
             await ctx.send("Invalid **Skill** Type.")
             return
-       
-        field = skill + "_prof"
+        
+        skill_key = skill.replace(" ", "_")
+        field = f"{skill_key}_prof"
 
         allowed_prof_inputs = {
             "none": 0, 
