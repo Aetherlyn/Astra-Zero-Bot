@@ -697,36 +697,38 @@ class Character(commands.Cog):
     # === Proficiency ===
 
     @commands.command()
-    async def prof(self, ctx, skill: str, prof: str):
+    async def prof(self, ctx, prof: str, skill: str):
         char = read_character(ctx.guild.id, ctx.author.id)
         skill = skill.lower().rstrip(" ")
         prof = prof.lower().rstrip(" ")
         field = ""
 
-        allowed_skill_inputs = ["athletics","acrobatics","sleight of hand","soh","stealth","arcana","history","investigation","nature","religion","animal handling","animal","insight","medicine","perception","survival","deception","intimidation","performance","persuasion"]
+        allowed_skill_inputs = ["athletics","acrobatics","sleight of hand","stealth","arcana","history","investigation","nature","religion","animal handling","insight","medicine","perception","survival","deception","intimidation","performance","persuasion"]
+        
+        skill_aliases = {
+            "soh": "sleight of hand",
+            "animal": "animal handling"
+            }
+
+        skill = skill_aliases.get(skill, skill)
 
         if skill not in allowed_skill_inputs:
             await ctx.send("Invalid **Skill** Type.")
             return
-
-        if skill == "sleight of hand" or skill == "soh":
-            field = "sleight_of_hand_prof"
-        elif skill == "animal":
-            field = "animal_handling_prof"
-        else:
-            field = skill + "_prof"
+       
+        field = skill + "_prof"
 
         allowed_prof_inputs = {
             "none": 0, 
             "half": 1, 
-            "prof": 2, 
+            "full": 2, 
             "double": 3
             }
 
         prof_level_strings = {
             "none": "no proficiency", 
             "half": "half proficiency", 
-            "prof": "proficiency", 
+            "full": "proficiency", 
             "double": "expertise"
             }
         
