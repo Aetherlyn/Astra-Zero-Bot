@@ -694,5 +694,58 @@ class Character(commands.Cog):
 
         await ctx.send(f"You shake off 1 level of **exhaustion**. You now have: **{new_exhaustion}**.")        
 
+    # === Proficiency ===
+
+    @commands.command()
+    async def prof(self, ctx, skill: str, prof: str):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        skill = skill.lower().rstrip(" ")
+        prof = prof.lower().rstrip(" ")
+        field = ""
+
+        allowed_skill_inputs = ["athletics","acrobatics","sleight of hand","soh","stealth","arcana","history","investigation","nature","religion","animal handling","animal","insight","medicine","perception","survival","deception","intimidation","performance","persuasion"]
+
+        if skill not in allowed_skill_inputs:
+            await ctx.send("Invalid **Skill** Type.")
+            return
+
+        if skill == "sleight of hand" or skill == "soh":
+            field = "sleight_of_hand_prof"
+        elif skill == "animal":
+            field = "animal_handling_prof"
+        else:
+            field = skill + "_prof"
+
+        allowed_prof_inputs = {
+            "none": 0, 
+            "half": 1, 
+            "prof": 2, 
+            "double": 3
+            }
+
+        prof_level_strings = {
+            "none": "no proficiency", 
+            "half": "half proficiency", 
+            "prof": "proficiency", 
+            "double": "expertise"
+            }
+        
+        if prof not in allowed_prof_inputs:
+            await ctx.send("Invalid **Proficiency** Level.")
+            return
+        else:
+            prof_value = allowed_prof_inputs[prof]
+
+        if prof_value == char[field]:
+            await ctx.send(f"Your **{skill}** is already at that **proficiency** level.")
+            return
+        
+        write_character(ctx.guild.id, ctx.author.id, field, prof_value)
+        
+        await ctx.send(f"You now have **{prof_level_strings[prof]}** with **{skill}**.")
+        
+        
+
+
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
