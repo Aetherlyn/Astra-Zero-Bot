@@ -10,6 +10,19 @@ allowed_commands = {
     "char",
     "char help",
 }
+def stat_modifier(stat_value: int):
+    return_value = 0
+
+    if stat_value >= 10:
+        stat_value -= 10
+        return_value = stat_value // 2
+        
+    elif stat_value < 10:
+        neg_value = -5
+        return_value = stat_value // 2
+        return_value = neg_value + return_value
+
+    return return_value
 
 # === Character Sheet Template ===
 def character_sheet(guild, char):
