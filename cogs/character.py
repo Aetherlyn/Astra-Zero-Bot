@@ -13,6 +13,22 @@ allowed_commands = {
 def stat_modifier(stat_value: int):
     return (stat_value - 10) // 2
 
+def proficiency_modifier(stat_value: int, prof_value: int, misc_value: int, prof_state: int):
+    stat_mod = stat_modifier(stat_value)
+
+    if prof_state == 0:
+        prof_mod = 0   
+    elif prof_state == 1:
+        prof_mod = prof_value // 2 + misc_value
+    elif prof_state == 2:
+        prof_mod = prof_value + misc_value 
+    elif prof_state == 3:
+        prof_mod = (prof_value * 2) + misc_value     
+    
+    total = stat_mod + prof_mod
+
+    return total
+
 # === Character Sheet Template ===
 def character_sheet(guild, char):
 
