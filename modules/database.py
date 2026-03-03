@@ -62,28 +62,59 @@ def init_db():
                 hd_d12 INTEGER NOT NULL DEFAULT 0,
                 current_hd_d12 INTEGER NOT NULL DEFAULT 0,
                      
+                strength_save_prof INTEGER NOT NULL DEFAULT 0,
+                misc_strength_save_prof INTEGER NOT NULL DEFAULT 0,
+                dexterity_save_prof INTEGER NOT NULL DEFAULT 0,
+                misc_dexterity_save_prof INTEGER NOT NULL DEFAULT 0,
+                constitution_save_prof INTEGER NOT NULL DEFAULT 0,
+                misc_constitution_save_prof INTEGER NOT NULL DEFAULT 0,
+                intelligence_save_prof INTEGER NOT NULL DEFAULT 0,
+                misc_intelligence_save_prof INTEGER NOT NULL DEFAULT 0,
+                wisdom_save_prof INTEGER NOT NULL DEFAULT 0,
+                misc_wisdom_save_prof INTEGER NOT NULL DEFAULT 0,
+                charisma_save_prof INTEGER NOT NULL DEFAULT 0,
+                misc_charisma_save_prof INTEGER NOT NULL DEFAULT 0,
+                     
                 athletics_prof INTEGER NOT NULL DEFAULT 0,
+                misc_athletics_prof INTEGER NOT NULL DEFAULT 0,
                      
                 acrobatics_prof INTEGER NOT NULL DEFAULT 0,
+                misc_acrobatics_prof INTEGER NOT NULL DEFAULT 0,
                 sleight_of_hand_prof INTEGER NOT NULL DEFAULT 0,
+                misc_sleight_of_hand_prof INTEGER NOT NULL DEFAULT 0,
                 stealth_prof INTEGER NOT NULL DEFAULT 0,
+                misc_stealth_prof INTEGER NOT NULL DEFAULT 0,
                      
                 arcana_prof INTEGER NOT NULL DEFAULT 0,
+                misc_arcana_prof INTEGER NOT NULL DEFAULT 0,
                 history_prof INTEGER NOT NULL DEFAULT 0,
+                misc_history_prof INTEGER NOT NULL DEFAULT 0,
                 investigation_prof INTEGER NOT NULL DEFAULT 0,
+                misc_investigation_prof INTEGER NOT NULL DEFAULT 0,
                 nature_prof INTEGER NOT NULL DEFAULT 0,
+                misc_nature_prof INTEGER NOT NULL DEFAULT 0,
                 religion_prof INTEGER NOT NULL DEFAULT 0,
+                misc_religion_prof INTEGER NOT NULL DEFAULT 0,
                      
                 animal_handling_prof INTEGER NOT NULL DEFAULT 0,
+                misc_animal_handling_prof INTEGER NOT NULL DEFAULT 0,
                 insight_prof INTEGER NOT NULL DEFAULT 0,
+                misc_insight_prof INTEGER NOT NULL DEFAULT 0,
                 medicine_prof INTEGER NOT NULL DEFAULT 0,
+                misc_medicine_prof INTEGER NOT NULL DEFAULT 0,
                 perception_prof INTEGER NOT NULL DEFAULT 0,
+                misc_perception_prof INTEGER NOT NULL DEFAULT 0,
                 survival_prof INTEGER NOT NULL DEFAULT 0,
+                misc_survival_prof INTEGER NOT NULL DEFAULT 0,
                      
                 deception_prof INTEGER NOT NULL DEFAULT 0,
+                misc_deception_prof INTEGER NOT NULL DEFAULT 0,
                 intimidation_prof INTEGER NOT NULL DEFAULT 0,
+                misc_intimidation_prof INTEGER NOT NULL DEFAULT 0,
                 performance_prof INTEGER NOT NULL DEFAULT 0,
+                misc_performance_prof INTEGER NOT NULL DEFAULT 0,
                 persuasion_prof INTEGER NOT NULL DEFAULT 0,
+                misc_persuasion_prof INTEGER NOT NULL DEFAULT 0,
                         
                 UNIQUE (guild_id, user_id)
             )
@@ -109,7 +140,7 @@ def read_character(guild_id: int, user_id: int):
 def write_character(guild_id, user_id, field, value):
     allowed_fields = {
         "name","race","class","hp","current_hp","temp_hp","max_hp_bonus","ac","speed","strength","dexterity","constitution","intelligence","wisdom","charisma","proficiency","initiative","weapons","armor","tools","languages","inspiration","hd_d6",
-        "current_hd_d6","hd_d8","current_hd_d8","hd_d10","current_hd_d10","hd_d12","current_hd_d12","exhaustion","athletics_prof","acrobatics_prof","sleight_of_hand_prof","stealth_prof","arcana_prof","history_prof","investigation_prof","nature_prof","religion_prof","animal_handling_prof","insight_prof","medicine_prof","perception_prof","survival_prof","deception_prof","intimidation_prof","performance_prof","persuasion_prof"
+        "current_hd_d6","hd_d8","current_hd_d8","hd_d10","current_hd_d10","hd_d12","current_hd_d12","exhaustion","athletics_prof","acrobatics_prof","sleight_of_hand_prof","stealth_prof","arcana_prof","history_prof","investigation_prof","nature_prof","religion_prof","animal_handling_prof","insight_prof","medicine_prof","perception_prof","survival_prof","deception_prof","intimidation_prof","performance_prof","persuasion_prof","misc_athletics_prof","misc_acrobatics_prof","misc_sleight_of_hand_prof","misc_stealth_prof","misc_arcana_prof","misc_history_prof","misc_investigation_prof","misc_nature_prof","misc_religion_prof","misc_animal_handling_prof","misc_insight_prof","misc_medicine_prof","misc_perception_prof","misc_survival_prof","misc_deception_prof","misc_intimidation_prof","misc_performance_prof","misc_persuasion_prof","strength_save_prof","dexterity_save_prof","constitution_save_prof","intelligence_save_prof","wisdom_save_prof","charisma_save_prof","misc_strength_save_prof","misc_dexterity_save_prof","misc_constitution_save_prof","misc_intelligence_save_prof","misc_wisdom_save_prof","misc_charisma_save_prof",
     }
 
     if field not in allowed_fields:
