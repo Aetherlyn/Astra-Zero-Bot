@@ -10,24 +10,33 @@ allowed_commands = {
     "char",
     "char help",
 }
+
+# === Functions ===
 def stat_modifier(stat_value: int):
     return (stat_value - 10) // 2
 
-def proficiency_modifier(stat_value: int, prof_value: int, misc_value: int, prof_state: int):
+def proficiency_modifier(stat_value: int, prof_value: int, prof_state: int, misc_value: int):
     stat_mod = stat_modifier(stat_value)
 
     if prof_state == 0:
-        prof_mod = 0   
+        prof_mod = 0
     elif prof_state == 1:
-        prof_mod = prof_value // 2 + misc_value
+        prof_mod = prof_value // 2 
     elif prof_state == 2:
-        prof_mod = prof_value + misc_value 
+        prof_mod = prof_value
     elif prof_state == 3:
-        prof_mod = (prof_value * 2) + misc_value     
+        prof_mod = (prof_value * 2)     
     
-    total = stat_mod + prof_mod
+    total = stat_mod + prof_mod + misc_value
 
     return total
+
+#I got lazy
+def normalizer(number):
+    if number > 0:
+        number = f"+{number}"
+    
+    return number
 
 # === Character Sheet Template ===
 def character_sheet(guild, char):
@@ -73,13 +82,13 @@ def character_sheet(guild, char):
 
     # === Ability Scores ===
 
-    embed.add_field(name="STR", value=f"{char['strength']}", inline=True)
-    embed.add_field(name="DEX", value=f"{char['dexterity']}", inline=True)
-    embed.add_field(name="CON", value=f"{char['constitution']}", inline=True)
+    embed.add_field(name="STR", value=f"SCR:**{char['strength']}** MOD:**{normalizer(stat_modifier(char['strength']))}** SAVE:**{normalizer(proficiency_modifier(char['strength'], char['proficiency'], char['strength_save_prof'], char['misc_strength_save_prof']))}**", inline=True)
+    embed.add_field(name="DEX", value=f"SCR:**{char['dexterity']}** MOD:**{normalizer(stat_modifier(char['dexterity']))}** SAVE:**{normalizer(proficiency_modifier(char['dexterity'], char['proficiency'], char['dexterity_save_prof'], char['misc_dexterity_save_prof']))}**", inline=True)
+    embed.add_field(name="CON", value=f"SCR:**{char['constitution']}** MOD:**{normalizer(stat_modifier(char['constitution']))}** SAVE:**{normalizer(proficiency_modifier(char['constitution'], char['proficiency'], char['constitution_save_prof'], char['misc_constitution_save_prof']))}**", inline=True)
 
-    embed.add_field(name="INT", value=f"{char['intelligence']}", inline=True)
-    embed.add_field(name="WIS", value=f"{char['wisdom']}", inline=True)
-    embed.add_field(name="CHR", value=f"{char['charisma']}", inline=True)
+    embed.add_field(name="INT", value=f"SCR:**{char['intelligence']}** MOD:**{normalizer(stat_modifier(char['intelligence']))}** SAVE:**{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['intelligence_save_prof'], char['misc_intelligence_save_prof']))}**", inline=True)
+    embed.add_field(name="WIS", value=f"SCR:**{char['wisdom']}** MOD:**{normalizer(stat_modifier(char['wisdom']))}** SAVE:**{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['wisdom_save_prof'], char['misc_wisdom_save_prof']))}**", inline=True)
+    embed.add_field(name="CHR", value=f"SCR:**{char['charisma']}** MOD:**{normalizer(stat_modifier(char['charisma']))}** SAVE:**{normalizer(proficiency_modifier(char['charisma'], char['proficiency'], char['charisma_save_prof'], char['misc_charisma_save_prof']))}**", inline=True)
 
     embed.add_field(name=SPACER, value=SPACER, inline=False)
 
