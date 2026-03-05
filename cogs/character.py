@@ -198,6 +198,12 @@ class Character(commands.Cog):
             elif isinstance(error, commands.BadArgument):
                 await ctx.send("The amount must be a valid **number**.")
 
+        # === Prof ===
+
+        if ctx.command == self.prof:
+            if isinstance(error, commands.MissingRequiredArgument):
+                await ctx.send("**Usage:** !prof <none/half/full/double> <any skill>")
+
     # === Commands ===
 
     # === Char ===
@@ -723,7 +729,7 @@ class Character(commands.Cog):
 
     # === Proficiency ===
 
-    @commands.command()
+    @commands.group(invoke_without_command=True)
     async def prof(self, ctx, prof: str, *, skill: str):
         char = read_character(ctx.guild.id, ctx.author.id)
         skill = skill.lower().strip()
