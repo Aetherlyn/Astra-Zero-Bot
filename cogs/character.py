@@ -778,8 +778,50 @@ class Character(commands.Cog):
         
         await ctx.send(f"You now have **{prof_level_strings[prof]}** with **{skill}**.")
         
+    @prof.command()
+    async def save(self, ctx, command: str, prof: str):
+        char = read_character(ctx.guild.id, ctx.author.id)
+        command = command.lower().strip()
+        prof = prof.lower().strip()
         
+        allowed_commands = ["add", "remove"]
 
+        prof_inputs = {
+            "strength": "strength_save_prof",
+            "str": "strength_save_prof",
+            "dexterity": "dexterity_save_prof",
+            "dex": "dexterity_save_prof",
+            "constitution": "constitution_save_prof",
+            "con": "constitution_save_prof",
+            "intelligence": "intelligence_save_prof",
+            "int": "intelligence_save_prof",
+            "charisma": "charisma_save_prof",
+            "chr": "charisma_save_prof",
+        }
+        
+        if command not in allowed_commands:
+            await ctx.send("Please use either **add** or **remove** to add or remove saving throw proficiency.\n **Usage:** !prof save add/remove <any ability score>")
+            return
+        if prof not in prof_inputs:
+            await ctx.send("Please use any **ability score** name or shortened version of it (example: strength/str) to add or remove saving throw proficiency.\n **Usage:** !prof save add/remove <any ability score>")
+            return
+        
+        field = prof_inputs[prof]
+
+        if command == "add":
+            if char[field] == 2:
+                await ctx.send(f"You already have proficiency with **{prof}** saving throws.")
+                return
+            write_character(ctx.guild.id, ctx.author.id, field, 2)
+            await ctx.send(f"You now have **{prof}** saving throw proficiency")
+            return
+        elif command == "remove":
+            if char[field] == 0:
+                await ctx.send(f"You already dont have any proficiency with **{prof}** saving throws.")
+                return
+            write_character(ctx.guild.id, ctx.author.id, field, 0)
+            await ctx.send(f"Your **{prof}** saving throw proficiency has been removed")
+            return
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
