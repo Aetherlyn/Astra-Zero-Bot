@@ -74,9 +74,13 @@ def character_sheet(guild, char):
 
     # === Main Combat Stats ===
     embed.add_field(name="HP", value=hp_text, inline=True)
+    
     embed.add_field(name="AC", value=f"{char['ac']}", inline=True)
+
     embed.add_field(name="Speed", value=f"{char['speed']}", inline=True)
-    embed.add_field(name="Inspiration", value=f"{char['inspiration']}", inline=True)
+
+    inspiration_icon = "✅" if char["inspiration"] else "❌"
+    embed.add_field(name="Inspiration", value=inspiration_icon, inline=True)
 
     embed.add_field(name=SPACER, value=SPACER, inline=False)
 
@@ -819,7 +823,7 @@ class Character(commands.Cog):
             return
         elif command == "remove":
             if char[field] == 0:
-                await ctx.send(f"You already dont have any proficiency with **{prof}** saving throws.")
+                await ctx.send(f"You already don't have proficiency with **{prof}** saving throws.")
                 return
             write_character(ctx.guild.id, ctx.author.id, field, 0)
             await ctx.send(f"Your **{prof}** saving throw proficiency has been removed")
