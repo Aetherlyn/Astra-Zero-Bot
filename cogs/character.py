@@ -97,8 +97,8 @@ def character_sheet(guild, char):
     embed.add_field(
         name=hd_msg,
         value = f'''
-        **Proficiency:** {char['proficiency']}\n
-        **Initiative:** {char['initiative']}\n
+        **Proficiency:** {normalizer(char['proficiency'])}\n
+        **Initiative:** {normalizer(char['initiative'] + char['dexterity'])}\n
         **Exhaustion:** {char['exhaustion']}
         ''',
         inline=False
@@ -794,6 +794,8 @@ class Character(commands.Cog):
             "constitution": "constitution_save_prof",
             "con": "constitution_save_prof",
             "intelligence": "intelligence_save_prof",
+            "wisdom": "wisdom_save_prof",
+            "wis": "wisdom_save_prof",
             "int": "intelligence_save_prof",
             "charisma": "charisma_save_prof",
             "chr": "charisma_save_prof",
