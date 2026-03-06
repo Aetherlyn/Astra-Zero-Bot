@@ -294,8 +294,6 @@ class Character(commands.Cog):
             await ctx.send("Usage: !char view <@member>")
         elif isinstance(error, commands.MemberNotFound):
             await ctx.send("Could not find a member. Mention them or use their username.")
-
-     # === Insp ===
    
     # === Insp ===
 
@@ -313,8 +311,10 @@ class Character(commands.Cog):
         await ctx.message.delete()
         await ctx.send(msg)
     
-    @insp.command()
-    async def add(self, ctx):
+    #For some mysterious reason add and use !insp subcommands refused to work and cause "MissingRequiredArgument: ctx is a required argument that is missing" error even when ctx is there, possibly caused by some clash in the memory, but I am not sure. I could not figure it out why that happened. Changing method names worked as a fix and I just assigned calling names as the previous ones.
+
+    @insp.command(name = "add")
+    async def insp_add(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
 
         await ctx.message.delete()
@@ -325,8 +325,8 @@ class Character(commands.Cog):
         elif char['inspiration'] == 1:
             await ctx.send("You **already have** an **inspiration** point!")
 
-    @insp.command()
-    async def use(self, ctx):
+    @insp.command(name = "use")
+    async def insp_use(self, ctx):
         char = read_character(ctx.guild.id, ctx.author.id)
 
         await ctx.message.delete()
