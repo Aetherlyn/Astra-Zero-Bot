@@ -112,30 +112,30 @@ def character_sheet(guild, char):
 
     # === Skill Proficiencies ===
     skills_left = (
-    f"**Athletics:** **{normalizer(proficiency_modifier(char['strength'], char['proficiency'], char['athletics_prof'], char['misc_athletics_prof']))}**\n"
+    f"Athletics: **{normalizer(proficiency_modifier(char['strength'], char['proficiency'], char['athletics_prof'], char['misc_athletics_prof']))}**\n"
     "\n"
-    f"**Acrobatics:** **{normalizer(proficiency_modifier(char['dexterity'], char['proficiency'], char['acrobatics_prof'], char['misc_acrobatics_prof']))}**\n"
-    f"**Sleight of Hand:** **{normalizer(proficiency_modifier(char['dexterity'], char['proficiency'], char['sleight_of_hand_prof'], char['misc_sleight_of_hand_prof']))}**\n"
-    f"**Stealth:** **{normalizer(proficiency_modifier(char['dexterity'], char['proficiency'], char['stealth_prof'], char['misc_stealth_prof']))}**\n"
+    f"Acrobatics: **{normalizer(proficiency_modifier(char['dexterity'], char['proficiency'], char['acrobatics_prof'], char['misc_acrobatics_prof']))}**\n"
+    f"Sleight of Hand: **{normalizer(proficiency_modifier(char['dexterity'], char['proficiency'], char['sleight_of_hand_prof'], char['misc_sleight_of_hand_prof']))}**\n"
+    f"Stealth: **{normalizer(proficiency_modifier(char['dexterity'], char['proficiency'], char['stealth_prof'], char['misc_stealth_prof']))}**\n"
     "\n"
-    f"**Arcana:** **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['arcana_prof'], char['misc_arcana_prof']))}**\n"
-    f"**History:** **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['history_prof'], char['misc_history_prof']))}**\n"
-    f"**Investigation:** **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['investigation_prof'], char['misc_investigation_prof']))}**\n"
-    f"**Nature:** **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['nature_prof'], char['misc_nature_prof']))}**\n"
-    f"**Religion:** **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['religion_prof'], char['misc_religion_prof']))}**"
+    f"Arcana: **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['arcana_prof'], char['misc_arcana_prof']))}**\n"
+    f"History: **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['history_prof'], char['misc_history_prof']))}**\n"
+    f"Investigation: **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['investigation_prof'], char['misc_investigation_prof']))}**\n"
+    f"Nature: **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['nature_prof'], char['misc_nature_prof']))}**\n"
+    f"Religion: **{normalizer(proficiency_modifier(char['intelligence'], char['proficiency'], char['religion_prof'], char['misc_religion_prof']))}**"
     )
 
     skills_right = (
-    f"**Animal Handling:** **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['animal_handling_prof'], char['misc_animal_handling_prof']))}**\n"
-    f"**Insight:** **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['insight_prof'], char['misc_insight_prof']))}**\n"
-    f"**Medicine:** **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['medicine_prof'], char['misc_medicine_prof']))}**\n"
-    f"**Perception:** **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['perception_prof'], char['misc_perception_prof']))}**\n"
-    f"**Survival:** **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['survival_prof'], char['misc_survival_prof']))}**\n"
+    f"Animal Handling: **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['animal_handling_prof'], char['misc_animal_handling_prof']))}**\n"
+    f"Insight: **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['insight_prof'], char['misc_insight_prof']))}**\n"
+    f"Medicine: **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['medicine_prof'], char['misc_medicine_prof']))}**\n"
+    f"Perception: **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['perception_prof'], char['misc_perception_prof']))}**\n"
+    f"Survival: **{normalizer(proficiency_modifier(char['wisdom'], char['proficiency'], char['survival_prof'], char['misc_survival_prof']))}**\n"
     "\n"
-    f"**Deception:** **{normalizer(proficiency_modifier(char['charisma'], char['proficiency'], char['deception_prof'], char['misc_deception_prof']))}**\n"
-    f"**Intimidation:** **{normalizer(proficiency_modifier(char['charisma'], char['proficiency'], char['intimidation_prof'], char['misc_intimidation_prof']))}**\n"
-    f"**Performance:** **{normalizer(proficiency_modifier(char['charisma'], char['proficiency'], char['performance_prof'], char['misc_performance_prof']))}**\n"
-    f"**Persuasion:** **{normalizer(proficiency_modifier(char['charisma'], char['proficiency'], char['persuasion_prof'], char['misc_persuasion_prof']))}**"
+    f"Deception: **{normalizer(proficiency_modifier(char['charisma'], char['proficiency'], char['deception_prof'], char['misc_deception_prof']))}**\n"
+    f"Intimidation: **{normalizer(proficiency_modifier(char['charisma'], char['proficiency'], char['intimidation_prof'], char['misc_intimidation_prof']))}**\n"
+    f"Performance: **{normalizer(proficiency_modifier(char['charisma'], char['proficiency'], char['performance_prof'], char['misc_performance_prof']))}**\n"
+    f"Persuasion: **{normalizer(proficiency_modifier(char['charisma'], char['proficiency'], char['persuasion_prof'], char['misc_persuasion_prof']))}**"
     )
 
     embed.add_field(name="Skills", value=skills_left, inline=True)
