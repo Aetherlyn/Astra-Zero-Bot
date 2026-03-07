@@ -102,7 +102,7 @@ def character_sheet(guild, char):
         name=hd_msg,
         value = f'''
         **Proficiency:** {normalizer(char['proficiency'])}\n
-        **Initiative:** {normalizer(char['initiative'] + char['dexterity'])}\n
+        **Initiative:** {normalizer(char['initiative'] + stat_modifier(char['dexterity']))}\n
         **Exhaustion:** {char['exhaustion']}
         ''',
         inline=False
