@@ -764,7 +764,75 @@ class Character(commands.Cog):
     # === Proficiency ===
 
     @commands.group(invoke_without_command=True)
-    async def prof(self, ctx, prof: str, *, skill: str):
+    async def prof(self, ctx):
+        char = read_character(ctx.guild.id, ctx.author.id)
+
+        prof_translation = {
+            0: "none", 
+            1: "half proficiency", 
+            2: "proficiency", 
+            3: "expertise"
+            }
+        
+        prof_column_str = (
+            f"Athletics: {prof_translation[char['athletics_prof']]}\n"
+            )
+
+        prof_column_dex = (
+            f"Acrobatics: {prof_translation[char['acrobatics_prof']]}\n"
+            f"Sleight of Hand: {prof_translation[char['sleight_of_hand_prof']]}\n"
+            f"Stealth: {prof_translation[char['stealth_prof']]}\n"
+            )
+
+        prof_column_int = (
+            f"Arcana: {prof_translation[char['arcana_prof']]}\n"
+            f"History: {prof_translation[char['history_prof']]}\n"
+            f"Investigation: {prof_translation[char['investigation_prof']]}\n"
+            f"Nature: {prof_translation[char['nature_prof']]}\n"
+            f"Religion: {prof_translation[char['religion_prof']]}\n"
+            )
+
+        prof_column_wis = (
+            f"Animal Handling: {prof_translation[char['animal_handling_prof']]}\n"
+            f"Insight: {prof_translation[char['insight_prof']]}\n"
+            f"Medicine: {prof_translation[char['medicine_prof']]}\n"
+            f"Perception: {prof_translation[char['perception_prof']]}\n"
+            f"Survival: {prof_translation[char['survival_prof']]}\n"
+            )
+
+        prof_column_chr = (
+            f"Deception: {prof_translation[char['deception_prof']]}\n"
+            f"Intimidation: {prof_translation[char['intimidation_prof']]}\n"
+            f"Performance: {prof_translation[char['performance_prof']]}\n"
+            f"Persuasion: {prof_translation[char['persuasion_prof']]}\n"
+            )
+
+        embed = discord.Embed(title = "Proficiencies", color = discord.Color.dark_gold())
+
+        SPACER = "\u200b"
+
+        embed.add_field(name="STR", value=prof_column_str, inline=False)
+        embed.add_field(name="DEX", value=prof_column_dex, inline=False)
+        embed.add_field(name="INT", value=prof_column_int, inline=False)
+        embed.add_field(name="WIS", value=prof_column_wis, inline=False)
+        embed.add_field(name="CHR", value=prof_column_chr, inline=False)
+
+        embed.add_field(name=SPACER, value=SPACER, inline=False)
+
+        owner = ctx.guild.get_member(char["user_id"])
+        if owner:
+            owner_name = owner.global_name
+            embed.set_footer(
+                text=f"Character belongs to {owner_name}",
+                icon_url=owner.display_avatar.url
+        )
+        else:
+            embed.set_footer(text="Character owner unknown")
+
+        await ctx.send(embed=embed)
+
+    @prof.command()
+    async def skill(self, ctx, prof: str, *, skill: str):
         char = read_character(ctx.guild.id, ctx.author.id)
         skill = skill.lower().strip()
         prof = prof.lower().strip()
@@ -858,6 +926,8 @@ class Character(commands.Cog):
             write_character(ctx.guild.id, ctx.author.id, field, 0)
             await ctx.send(f"Your **{prof}** saving throw proficiency has been removed")
             return
+
+    # === TODO-Miscellaneous ===
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
