@@ -341,7 +341,7 @@ class Character(commands.Cog):
         await ctx.message.delete()
         await ctx.send(msg)
     
-    #For some mysterious reason add and use !insp subcommands refused to work and cause "MissingRequiredArgument: ctx is a required argument that is missing" error even when ctx is there, possibly caused by some clash in the memory, but I am not sure. I could not figure it out why that happened. Changing method names worked as a fix and I just assigned calling names as the previous ones.
+    #Note for future self: For some mysterious reason add and use !insp subcommands refused to work and cause "MissingRequiredArgument: ctx is a required argument that is missing" error even when ctx is there, possibly caused by some clash in the memory, but I am not sure. I could not figure it out why that happened. Changing method names worked as a fix and I just assigned calling names as the previous ones.
 
     @insp.command(name = "add")
     async def insp_add(self, ctx):
@@ -807,9 +807,15 @@ class Character(commands.Cog):
             f"Persuasion: {prof_translation[char['persuasion_prof']]}\n"
             )
 
+        prof_column_save = (
+            f"STR: {prof_translation[char['strength_save_prof']]}\n"
+            f"DEX: {prof_translation[char['dexterity_save_prof']]}\n"
+            f"CON: {prof_translation[char['constitution_save_prof']]}\n"
+            f"INT: {prof_translation[char['intelligence_save_prof']]}\n"
+            f"WIS: {prof_translation[char['wisdom_save_prof']]}\n"
+            f"CHR: {prof_translation[char['charisma_save_prof']]}\n"
+        )
         embed = discord.Embed(title = "Proficiencies", color = discord.Color.dark_gold())
-
-        SPACER = "\u200b"
 
         embed.add_field(name="STR", value=prof_column_str, inline=False)
         embed.add_field(name="DEX", value=prof_column_dex, inline=False)
@@ -817,8 +823,8 @@ class Character(commands.Cog):
         embed.add_field(name="WIS", value=prof_column_wis, inline=False)
         embed.add_field(name="CHR", value=prof_column_chr, inline=False)
 
-        embed.add_field(name=SPACER, value=SPACER, inline=False)
-
+        embed.add_field(name="Saving Throws", value=prof_column_save, inline=False)
+        
         owner = ctx.guild.get_member(char["user_id"])
         if owner:
             owner_name = owner.global_name
