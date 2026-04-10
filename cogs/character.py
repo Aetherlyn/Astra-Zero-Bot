@@ -934,11 +934,9 @@ class Character(commands.Cog):
             return
 
     # === TODO-Miscellaneous ===
-
-    #Command works fine, but does not show on discord side. Needs fix.
+    
     @commands.group(invoke_without_command=True)
     async def misc(self, ctx):
-        print("MISC COMMAND HIT")
         char = read_character(ctx.guild.id, ctx.author.id)
 
         skills = {"misc_athletics_prof": "athletics",
@@ -963,12 +961,12 @@ class Character(commands.Cog):
         message = ""
 
         for key, skill_name in skills.items():
-            value = char.get(key, 0)
+            value = char[key] if key in char else 0
             if value != 0:
                 message += f"**{skill_name}:** {value}\n"
 
         if message == "":
-            message = "no hablo ingles"
+            message = "nothing"
 
         await ctx.send(message)
 
