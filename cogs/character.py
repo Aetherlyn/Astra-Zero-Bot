@@ -933,7 +933,7 @@ class Character(commands.Cog):
             await ctx.send(f"Your **{prof}** saving throw proficiency has been removed")
             return
 
-    # === TODO-Miscellaneous ===
+    # ===Miscellaneous ===
 
     @commands.group(invoke_without_command=True)
     async def misc(self, ctx):
@@ -969,13 +969,13 @@ class Character(commands.Cog):
         for key, skill_name in skills.items():
             value = char[key]
             if value != 0:
-                message += f"**{skill_name}:** {value}\n"
+                message += f"**{skill_name}:** {normalizer(value)}\n"
 
         if message == "":
             message = "You do not have any miscellaneous bonuses."
 
         embed = discord.Embed(title = "", color = discord.Color.dark_gold())
-        embed.add_field(name="", value=message, inline=False)
+        embed.add_field(name="Miscellaneous Bonuses", value=message, inline=False)
 
         await ctx.send(embed=embed)
 
@@ -1000,12 +1000,12 @@ class Character(commands.Cog):
         field = f"misc_{skill.replace(' ', '_')}_prof"
 
         if char[field] == bonus:
-            await ctx.send(f"Your **{skill}** skill **already** has **{bonus}** miscellaneous bonus.")
+            await ctx.send(f"Your **{skill}** skill **already** has **{normalizer(bonus)}** miscellaneous bonus.")
             return
         
         write_character(ctx.guild.id, ctx.author.id, field, bonus)
 
-        await ctx.send(f"Your **{skill}** skill **now** has **{bonus}** miscellaneous bonus.")
+        await ctx.send(f"Your **{skill}** skill **now** has **{normalizer(bonus)}** miscellaneous bonus.")
         
         
     @misc.command()
