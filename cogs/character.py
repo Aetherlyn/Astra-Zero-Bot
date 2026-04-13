@@ -967,7 +967,7 @@ class Character(commands.Cog):
         message = ""
 
         for key, skill_name in skills.items():
-            value = char[key] if key in char else 0
+            value = char[key]
             if value != 0:
                 message += f"**{skill_name}:** {value}\n"
 
