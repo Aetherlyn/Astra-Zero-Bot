@@ -1042,8 +1042,12 @@ class Character(commands.Cog):
 
     # ===TODO-Reset===
 
-    @commands.command()
+    @commands.group()
     async def reset(self, ctx):
+        pass
+    
+    @reset.command()
+    async def char(self, ctx):
         view = ConfirmView(ctx.author)
 
         await ctx.send(
