@@ -122,6 +122,11 @@ def init_db():
 
 # === Commmands ===
 
+def delete_character(guild_id: int, user_id: int):
+    with get_conn() as conn:
+        conn.execute("DELETE FROM characters WHERE guild_id=? AND user_id=?", (guild_id, user_id))
+        conn.commit()
+
 def create_character(guild_id: int, user_id: int):
     with get_conn() as conn:
         cur = conn.cursor()
