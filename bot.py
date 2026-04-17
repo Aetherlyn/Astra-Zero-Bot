@@ -41,6 +41,7 @@ async def on_ready():
 bot.load_extension("cogs.meta")
 bot.load_extension("cogs.dice")
 bot.load_extension("cogs.character")
+bot.load_extension("cogs.reset")
 
 init_db()
 bot.run(os.getenv('TOKEN')) 

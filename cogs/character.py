@@ -3,7 +3,6 @@ import discord
 from modules.database import *
 from discord.ext import commands
 from discord.ext.commands import CheckFailure
-from modules.views import ConfirmView
 
 logger = logging.getLogger(__name__)
 
@@ -1038,39 +1037,7 @@ class Character(commands.Cog):
         
         write_character(ctx.guild.id, ctx.author.id, field, bonus)
 
-        await ctx.send(f"Your **{skill}** saving throws **now** has **{normalizer(bonus)}** miscellaneous bonus.")
-
-    # ===TODO-Reset===
-
-    @commands.group()
-    async def reset(self, ctx):
-        pass
-    
-    @reset.command()
-    async def char(self, ctx):
-        #Do not actually test this until you are done testing and implementing rest of the reset commandline
-        view = ConfirmView(ctx.author)
-
-        await ctx.send(
-            "Do you really wish to delete your character?",
-            view=view
-        )
-
-        await view.wait()
-
-        if view.value is None:
-            await ctx.send("Timed out.")
-        elif view.value:
-            await ctx.send("Character deleted.")
-            delete_character(ctx.guild.id, ctx.author.id)
-        else:
-            await ctx.send("Cancelled.")
-            
-
-
-        
-        
-        
+        await ctx.send(f"Your **{skill}** saving throws **now** has **{normalizer(bonus)}** miscellaneous bonus.")   
 
 def setup(bot: commands.Bot):
     bot.add_cog(Character(bot))
