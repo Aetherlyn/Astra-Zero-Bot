@@ -12,6 +12,8 @@ class Reset(commands.Cog):
 
     # === Reset ===
 
+    #TODO-In the final version, revise all of the commands for extra feedback answers and trim them, and possibly turn the messages into embed messages.
+
     @commands.group()
     async def reset(self, ctx):
         pass
@@ -72,6 +74,43 @@ class Reset(commands.Cog):
         else:
             await ctx.send("Cancelled.")
 
+    @reset.command
+    async def skills(self, ctx):
+        view = ConfirmView(ctx.author)
+
+        stats = {
+            "athletics_prof": 0,
+            "acrobatics_prof": 0,
+            "sleight_of_hand_prof": 0,
+            "stealth_prof": 0,
+            "arcana_prof": 0,
+            "history_prof": 0,
+            "investigation_prof": 0,
+            "nature_prof": 0,
+            "religion_prof": 0,
+            "animal_handling_prof": 0,
+            "insight_prof": 0,
+            "medicine_prof": 0,
+            "perception_prof": 0,
+            "survival_prof": 0,
+            "deception_prof": 0,
+            "intimidation_prof": 0,
+            "performance_prof": 0,
+            "persuasion_prof": 0,
+        }
+
+        await ctx.send("Do you really wish to reset your skill proficiencies?", view=view)
+
+        await view.wait()
+
+        if view.value is None:
+            await ctx.send("Timed out.")
+        elif view.value:
+            for key, value in stats.items():
+                write_character(ctx.guild.id, ctx.author.id, key, value)
+            await ctx.send("Skills have been reset.")
+        else:
+            await ctx.send("Cancelled.")
 
 
 def setup(bot: commands.Bot):
