@@ -267,6 +267,22 @@ class Reset(commands.Cog):
             await ctx.send("Tool proficiencies have been reset.")
         else:
             await ctx.send("Cancelled.")
+            
+    @reset.command()
+    async def languages(self, ctx):
+        view = ConfirmView(ctx.author)
+
+        await ctx.send("Do you really wish to reset your language proficiencies?", view=view)
+
+        await view.wait()
+        
+        if view.value is None:
+            await ctx.send("Timed out.")
+        elif view.value:
+            write_character(ctx.guild.id, ctx.author.id, "languages", "")
+            await ctx.send("Language proficiencies have been reset.")
+        else:
+            await ctx.send("Cancelled.")
 
 def setup(bot: commands.Bot):
     bot.add_cog(Reset(bot))
