@@ -29,6 +29,10 @@ class ConfirmView(discord.ui.View):
         await interaction.response.edit_message(content="Cancelled.", view=self)
         self.stop()
 
-    def disable_all_items(self):
+    async def timeout_event(self):
+        self.disable_buttons()
+        self.stop()
+
+    def disable_buttons(self):
         for item in self.children:
             item.disabled = True
