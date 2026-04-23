@@ -10,11 +10,21 @@ class Reset(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # === Character Check ===
+
+    async def cog_check(self, ctx):
+        if not ctx.command:
+            return True
+        
+        char = read_character(ctx.guild.id, ctx.author.id)
+            
+        if not char:
+            await ctx.send("You do not have a character to reset anything. Use '!char' command to create one")
+            return False
+        else:
+            return True
+
     # === Reset ===
-
-    #TODO- DO not allow these command line to trigger if someone does not have an active character just like in character.py cog general event handler.
-
-    #TODO-In the final version, revise all of the commands for extra feedback answers and trim them, and possibly turn the messages into embed messages.
 
     @commands.group()
     async def reset(self, ctx):
@@ -22,7 +32,6 @@ class Reset(commands.Cog):
 
     @reset.command()
     async def char(self, ctx):
-        #Do not actually test this until you are done testing and implementing rest of the reset commandline
         embed = discord.Embed(
             title="Char Delete",
             description="Do you really wish to delete your character?",
