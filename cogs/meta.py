@@ -62,7 +62,7 @@ class Meta(commands.Cog):
         )
 
         embed.add_field(
-            name="Char",
+            name="Character",
             value=("**![char]**: Creates a blank character sheet on the first use, otherwise prints out existing one.\n"
                    "**![char set]**: Assigns the corresponding section with a given value. Primary way of modifying character sheet. Usage: **!char set** <field> <value>\n"
                    "**![char view]**: Shows a character sheet that belongs to another guild member if the member has one. Usage: **!char view** <username>\n"
@@ -71,14 +71,26 @@ class Meta(commands.Cog):
         )
         
         embed.add_field(
-            name="Insp",
+            name="Inspiration",
             value=("**![insp]**: Quick check command for inspiration status instead of !char.\n"
                    "**![insp add]**: Adds an inspiration point to your character\n"
                    "**![insp use]**: Burns existing inspiration point\n"
                    "**![insp give]**: Transfers inspiration point to given username's character. Usage: **!insp give** <username>\n"                   
                    ),
             inline=False
-        )        
+        )
+        
+        embed.add_field(
+            name="Hit Point",
+            value=("**![hp]**: Quick check command for hit point status instead of !char.\n"
+                   "**![hp temp]**: Add the provided amount as the temporary hit poing, not additive. Resets back to zero with the !rest command.\n"
+                   "**![hp maxhp]**: Sets the provided amount as the maximum hit point capacity bonus. Resets back to zero with the !rest command.\n"
+                   "**![hp damage]**: Subtracts the provided amount of hit points from the total pool, prioratizing the temporary hit points first. Usage: **!hp damage** <amount> \n"
+                   "**![hp heal]** Adds the provided amount of hit points from the total pool. Usage: **!hp heal** <amount> \n"
+                   "**![hp remove]** Removes either temporary hit points or the maximum hit point bonus. Usage: **!hp remove** <amount> \n"                                         
+                   ),
+            inline=False
+        )            
         
         await ctx.send(embed = embed)
 
