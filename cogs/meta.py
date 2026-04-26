@@ -83,11 +83,22 @@ class Meta(commands.Cog):
         embed.add_field(
             name="Hit Point",
             value=("**![hp]**: Quick check command for hit point status instead of !char.\n"
-                   "**![hp temp]**: Add the provided amount as the temporary hit poing, not additive. Resets back to zero with the !rest command.\n"
+                   "**![hp temp]**: Sets the provided amount as the temporary hit poing, not additive. Resets back to zero with the !rest command.\n"
                    "**![hp maxhp]**: Sets the provided amount as the maximum hit point capacity bonus. Resets back to zero with the !rest command.\n"
                    "**![hp damage]**: Subtracts the provided amount of hit points from the total pool, prioratizing the temporary hit points first. Usage: **!hp damage** <amount> \n"
                    "**![hp heal]** Adds the provided amount of hit points from the total pool. Usage: **!hp heal** <amount> \n"
                    "**![hp remove]** Removes either temporary hit points or the maximum hit point bonus. Usage: **!hp remove** temp/maxhp \n"                                         
+                   ),
+            inline=False
+        )
+        
+        embed.add_field(
+            name="Hit Dice",
+            value=("**![hd]**: Quick check command for hit dice status instead of !char.\n"
+                   "**![hd addmax]**: Add the provided amount on top of your maximum hit dice capacity.\n"
+                   "**![hd reducemax]**: Subtracts the provided amount as the maximum hit point capacity bonus. Resets back to zero with the !rest command.\n"
+                   "**![hd use]**: Subtracts the provided amount of hit dice from the current pool. Usage: **!hd use** <amount> \n"
+                   "**![hd restore]** Adds the provided amount of hit dice to the current pool. Usage: **!hd restore** <amount> \n"                                         
                    ),
             inline=False
         )            
