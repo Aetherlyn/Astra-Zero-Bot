@@ -117,7 +117,7 @@ class Meta(commands.Cog):
             name="Proficiency",
             value=("**![prof]**: Displays information about the proficiency status of each skill and saving throw.\n"
                    "**![prof skill]**: Sets the proficiency level of a chosen skill. Usage: **!prof skill** <none/half/full/double> <skill name> \n"
-                   "**![prof save]**: Sets the proficiency level of a chosen saving throw. Usage: **!prof save** <none/half/full/double> <ability score name> \n"                                     
+                   "**![prof save]**: Adds or removes proficiency of a chosen saving throw. Usage: **!prof save** <add/remove> <ability score name> \n"                                     
                    ),
             inline=False
         )                  
